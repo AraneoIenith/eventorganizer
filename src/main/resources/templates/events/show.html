@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<body>
+<div layout:fragment="content">
+    <div class="page-header">
+        <h1 th:text="${'Veranstaltung ' + event.name}"></h1>
+        <form th:action="${'/events/' + event.id + '/delete'}" method="post" class="form">
+            <button type="submit" class="btn btn-danger">Löschen</button>
+        </form>
+    </div>
+
+    <table th:if="${!event.times.empty}" class="table">
+        <tr>
+            <th>Veranstaltung</th>
+            <th>Termin</th>
+            <th>Beschreibung</th>
+            <th>Höchstteilnehmerzahl</th>
+            <th>Datum</th>
+        </tr>
+        <tr th:each="time : ${event.times}">
+            <td th:text="${time.event.name}"></td>
+            <td th:text="${time.title}"></td>
+            <td th:text="${time.description}"></td>
+            <td th:text="${time.maxParticipant}"></td>
+            <td th:text="${time.date}"></td>
+        </tr>
+    </table>
+
+    <div>
+        <h2>Neuer Termin</h2>
+        <form th:action="${'/events/' + event.id}" method="post" class="form-inline">
+            <input name="title" type="text" placeholder="Titel des Termins" class="form-control"/>
+            <input name="description" type="text" placeholder="Beschreibung" class="form-control"/>
+            <input name="maxParticipant" type="number" placeholder="Höchstteilnehmerzahl" class="form-control"/>
+            <input name="date" type="text" placeholder="Datum" class="form-control"/>
+            <button type="submit" class="btn btn-primary">Eintragen</button>
+        </form>
+    </div>
+
+    <hr/>
+    <p class="small">
+        <a href="/events/">Index</a>
+    </p>
+</div>
+</body>
+</html>
