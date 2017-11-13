@@ -1,5 +1,6 @@
 package de.hsba.two.organizer.user;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -11,6 +12,7 @@ public class User {
     @GeneratedValue
     private Long id;
 
+    @Column(unique = true)
     private String name;
 
     private String password;
@@ -27,14 +29,6 @@ public class User {
     }
 
     public Long getId() { return id; }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public String getPassword() {
         return password;
@@ -53,4 +47,11 @@ public class User {
     }
 
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

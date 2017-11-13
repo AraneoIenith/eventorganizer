@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<body>
+<div layout:fragment="content">
+
+  <div class="page-header">
+    <h1>Veranstaltungskalender Nutzerverwaltung</h1>
+  </div>
+
+  <ul class="list-unstyled">
+    <li th:each="user : ${users}" th:text="${user.name}" />
+  </ul>
+
+  <hr/>
+  <p class="small">
+    <a href="/events/">Index</a>
+  </p>
+</div>
+</body>
+</html>
