@@ -1,10 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.w3.org/1999/xhtml"
       layout:decorate="~{layout}">
 <body>
 <div layout:fragment="content">
     <div class="page-header">
+        <form action="/logout" class="pull-right" method="post">
+            <button type="submit" class="btn btn-xs btn-link">
+                <span th:text="${#httpServletRequest.remoteUser}" />
+                Abmelden
+            </button>
+        </form>
+        <a sec:authorize="hasRole('HR')" href="/users/" class="btn btn-xs btn-link pull-right">Nutzerverwaltung</a>
+        <!--<a href="/profile/" class="btn btn-xs btn-link pull-right">Profil- und Veranstaltungsverwaltung</a>-->
         <h1>Veranstaltungskalender</h1>
     </div>
 
