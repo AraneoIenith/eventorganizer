@@ -12,7 +12,7 @@
             </button>
         </form>
         <a sec:authorize="hasRole('HR')" href="/users/" class="btn btn-xs btn-link pull-right">Nutzerverwaltung</a>
-        <!--<a href="/profile/" class="btn btn-xs btn-link pull-right">Profil- und Veranstaltungsverwaltung</a>-->
+        <a th:href="${'/profile/' + #httpServletRequest.remoteUser}" class="btn btn-xs btn-link pull-right">Mein Profil</a>
         <h1>Veranstaltungskalender</h1>
     </div>
 

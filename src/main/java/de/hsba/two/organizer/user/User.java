@@ -13,7 +13,9 @@ public class User {
     private Long id;
 
     @Column(unique = true)
-    private String name;
+    private String username;
+
+    private String persno;
 
     private String password;
 
@@ -22,8 +24,9 @@ public class User {
     private User() {
     }
 
-    public User(String name, String password, String role) {
-        this.name = name;
+    public User(String username, String persno, String password, String role) {
+        this.username = username;
+        this.persno = persno;
         this.password = password;
         this.role = role;
     }
@@ -47,11 +50,19 @@ public class User {
     }
 
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPersno() {
+        return persno;
+    }
+
+    public void setPersno(String persno) {
+        this.persno = persno;
     }
 }

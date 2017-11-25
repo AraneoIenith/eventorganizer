@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Profil</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+    <h1>Hallo <span th:text="${user.username}"></span>!</h1>
+    <br>
+    <br>
+    <br>
+    <h2>Hier kannst du deine Benutzerdaten sehen:</h2>
+    <table class="table">
+        <tr>
+            <th>Benutzername</th>
+            <th>Personalnummer</th>
+            <th>Rolle</th>
+        </tr>
+        <tr>
+            <td th:text="${user.username}"></td>
+            <td th:text="${user.persno}"></td>
+            <td th:text="${user.role}"></td>
+        </tr>
+    </table>
+    <br>
+    <br>
+    <h2>Möchtest du dein Passwort ändern?</h2>
+    <br>
+    <form th:action="${'/profile/' + user.username + '/edit'}" method="post" class="form-inline">
+        <input name="passwordold" type="text" placeholder="Altes Passwort" class="form-control"/>
+        <input name="passwordnew" type="text" placeholder="Neues Passwort" class="form-control"/>
+        <input name="passwordnew2" type="text" placeholder="Neues Passwort wiederholen" class="form-control"/>
+        <button type="submit" class="btn btn-primary">Passwort ändern</button>
+    </form>
+
+    <br>
+    <p class="small">
+        <a href="/events/">Zurück</a>
+    </p>
+
+</div>
+</body>
+</html>
