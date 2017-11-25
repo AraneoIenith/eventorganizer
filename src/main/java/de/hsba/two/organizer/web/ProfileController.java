@@ -20,16 +20,5 @@ public class ProfileController {
     public String show(@PathVariable("username") String username, Model model){
         model.addAttribute("user", userService.getUser(username));
         return "profile/show";
-        /*   if ("username" == "currentuser") {
-            return "profile/show";}
-        else {
-            return "events/";} */
-    }
 
-/*    @PostMapping(path = "/{username}/edit")
-    public String update(@PathVariable("username") String username, Model model){
-        model.addAttribute("user", userService.getUser(username));
-        return "profile/show";
-    }
-      */
 }
