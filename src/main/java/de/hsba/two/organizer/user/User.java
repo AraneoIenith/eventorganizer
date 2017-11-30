@@ -15,7 +15,7 @@ public class User {
     @Column(unique = true)
     private String username;
 
-    private String persno;
+    private String firstname;
 
     private String password;
 
@@ -24,9 +24,9 @@ public class User {
     private User() {
     }
 
-    public User(String username, String persno, String password, String role) {
+    public User(String username, String firstname, String password, String role) {
         this.username = username;
-        this.persno = persno;
+        this.firstname = firstname;
         this.password = password;
         this.role = role;
     }
@@ -58,11 +58,11 @@ public class User {
         this.username = username;
     }
 
-    public String getPersno() {
-        return persno;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setPersno(String persno) {
-        this.persno = persno;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 }

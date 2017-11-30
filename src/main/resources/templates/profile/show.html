@@ -10,20 +10,20 @@
 
 <body>
 <div layout:fragment="content">
-    <h1>Hallo <span th:text="${user.username}"></span>!</h1>
+    <h1>Hallo <span th:text="${user.firstname}"></span>!</h1>
     <br>
     <br>
     <br>
     <h2>Hier kannst du deine Benutzerdaten sehen:</h2>
     <table class="table">
         <tr>
-            <th>Benutzername</th>
+            <th>Name</th>
             <th>Personalnummer</th>
             <th>Rolle</th>
         </tr>
         <tr>
+            <td th:text="${user.firstname}"></td>
             <td th:text="${user.username}"></td>
-            <td th:text="${user.persno}"></td>
             <td th:text="${user.role}"></td>
         </tr>
     </table>
@@ -31,11 +31,24 @@
     <br>
     <h2>Möchtest du dein Passwort ändern?</h2>
     <br>
-    <form th:action="${'/profile/' + user.username + '/edit'}" method="post" class="form-inline">
-        <input name="passwordold" type="text" placeholder="Altes Passwort" class="form-control"/>
-        <input name="passwordnew" type="text" placeholder="Neues Passwort" class="form-control"/>
-        <input name="passwordnew2" type="text" placeholder="Neues Passwort wiederholen" class="form-control"/>
-        <button type="submit" class="btn btn-primary">Passwort ändern</button>
+    <form th:action="${'/profile/' + user.username}" method="post" class="form-group">
+
+        <div th:if="${param.passold}" class="form-group">
+            <div class="col-sm-offset-2 col-sm-10 text-danger">
+                <strong>Altes Passwort stimmt nicht</strong>
+            </div>
+        </div>
+        <div th:if="${param.passnew}" class="form-group">
+            <div class="col-sm-offset-2 col-sm-10 text-danger">
+                <strong>Das neue Passwort wurde nicht korrekt wiederholt</strong>
+            </div>
+        </div>
+        <div class="form-inline">
+            <input name="passwordold" type="password" placeholder="Altes Passwort" class="form-control"/>
+            <input name="passwordnew" type="password" placeholder="Neues Passwort" class="form-control"/>
+            <input name="passwordnew2" type="password" placeholder="Neues Passwort wiederholen" class="form-control"/>
+            <button type="submit" class="btn btn-primary">Passwort ändern</button>
+        </div>
     </form>
 
     <br>
