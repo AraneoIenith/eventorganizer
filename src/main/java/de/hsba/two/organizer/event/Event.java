@@ -1,5 +1,7 @@
 package de.hsba.two.organizer.event;
 
+import de.hsba.two.organizer.user.User;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +18,9 @@ public class Event {
 
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<EventTime> times;
+
+    @ManyToOne
+    private User owner;
 
 
     public Long getId() {

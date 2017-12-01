@@ -5,26 +5,27 @@
 <body>
 <div layout:fragment="content">
     <div class="page-header">
-        <h1 th:text="${'Veranstaltung ' + event.name + ' Kategorie:' + event.category}"></h1>
+        <a class="btn btn-xs btn-link pull-right" href="/events/">Zu den Veranstaltungen</a>
+        <h1 th:text="${'Veranstaltung: ' + event.name}"></h1>
+        <h4 th:text="${'Kategorie: ' + event.category}"></h4>
         <form th:action="${'/events/' + event.id + '/delete'}" method="post" class="form">
             <button type="submit" class="btn btn-danger">Löschen</button>
         </form>
     </div>
 
-    <table th:if="${!event.times.empty}" class="table">
+    <table th:if="${!event.times.empty}" class="table table-bordered">
         <tr>
-            <th>Veranstaltung</th>
             <th>Termin</th>
-            <th>Beschreibung</th>
-            <th>Höchstteilnehmerzahl</th>
             <th>Datum</th>
+            <th>Uhrzeit</th>
+            <th>Teilnehmer</th>
         </tr>
         <tr th:each="time : ${event.times}">
-            <td th:text="${time.event.name}"></td>
             <td th:text="${time.title}"></td>
-            <td th:text="${time.description}"></td>
-            <td th:text="${time.maxParticipant}"></td>
             <td th:text="${time.date}"></td>
+            <td th:text="${time.time}"></td>
+            <td th:text="${time.maxParticipants}"></td>
+            <td><a class="btn btn-info" th:href="${'/eventtime/' + time.id}">Anschauen</a></td>
         </tr>
     </table>
 
@@ -33,16 +34,15 @@
         <form th:action="${'/events/' + event.id}" method="post" class="form-inline">
             <input name="title" type="text" placeholder="Titel des Termins" class="form-control"/>
             <input name="description" type="text" placeholder="Beschreibung" class="form-control"/>
-            <input name="maxParticipant" type="number" placeholder="Höchstteilnehmerzahl" class="form-control"/>
+            <input name="maxParticipants" type="number" placeholder="Höchstteilnehmerzahl" class="form-control"/>
             <input name="date" type="text" placeholder="Datum" class="form-control"/>
+            <input name="time" type="text" placeholder="Uhrzeit" class="form-control"/>
             <button type="submit" class="btn btn-primary">Eintragen</button>
         </form>
     </div>
 
     <hr/>
-    <p class="small">
-        <a href="/events/">Index</a>
-    </p>
+
 </div>
 </body>
 </html>

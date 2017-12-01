@@ -16,11 +16,20 @@
         <h1>Veranstaltungskalender</h1>
     </div>
 
-    <ul class="list-unstyled">
-        <li th:each="event : ${event}">
-            <a th:href="${'/events/' + event.id}" th:text="${event.name}"></a>
-        </li>
-    </ul>
+    <div class="row">
+        <table class="table table-striped">
+            <tr>
+                <th>Veranstaltung</th>
+                <th>Kategorie</th>
+            </tr>
+            <tr th:each="event : ${event}">
+                <td>
+                    <a th:href="${'/events/' + event.id}" th:text="${event.name}"></a>
+                </td>
+                <td th:text="${event.category}"></td>
+            </tr>
+        </table>
+    </div>
 
     <form action="/events" method="post" class="form-inline">
         <input name="name" type="text" placeholder="Name" class="form-control">

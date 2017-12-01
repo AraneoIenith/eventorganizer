@@ -3,7 +3,6 @@ package de.hsba.two.organizer.event;
 import de.hsba.two.organizer.user.User;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,22 +18,28 @@ public class EventTime {
 
     private String title;
 
-    private Long maxParticipant;
+    private Integer maxParticipants;
 
     private String description;
 
     private String date;
 
+    private String time;
+
     @ManyToMany
-    private List<User> participant;
+    private List<User> participants;
+
 
 
     public EventTime(){}
 
-    public EventTime(String title, Long maxParticipant, String description){
+    public EventTime(String title, Integer maxParticipants, String description, Event event, String date, String time){
         this.title = title;
-        this.maxParticipant = maxParticipant;
+        this.maxParticipants = maxParticipants;
         this.description = description;
+        this.date = date;
+        this.time= time;
+        this.event = event;
     }
 
     public Long getId() {
@@ -57,13 +62,6 @@ public class EventTime {
         this.title = title;
     }
 
-    public Long getMaxParticipant() {
-        return maxParticipant;
-    }
-
-    public void setMaxParticipant(Long maxParticipant) {
-        this.maxParticipant = maxParticipant;
-    }
 
     public String getDescription() {
         return description;
@@ -73,15 +71,15 @@ public class EventTime {
         this.description = description;
     }
 
-    public List<User> getParticipant() {
-        if (participant == null){
-            participant = new ArrayList<>();
+    public List<User> getParticipants() {
+        if (participants == null){
+            participants = new ArrayList<>();
         }
-        return participant;
+        return participants;
     }
 
-    public void setParticipant(List<User> participant) {
-        this.participant = participant;
+    public void setParticipants(List<User> participants) {
+        this.participants = participants;
     }
 
     public String getDate() {
@@ -91,4 +89,23 @@ public class EventTime {
     public void setDate(String date) {
         this.date = date;
     }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+
+    public Integer getMaxParticipants() {
+        return maxParticipants;
+    }
+
+    public void setMaxParticipants(Integer maxParticipants) {
+        this.maxParticipants = maxParticipants;
+    }
+
+
 }
