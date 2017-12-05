@@ -1,7 +1,7 @@
 package de.hsba.two.organizer.web;
 
+import de.hsba.two.organizer.event.EventService;
 import de.hsba.two.organizer.user.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,15 +14,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/profile")
 public class ProfileController {
 
-    @Autowired
-    private UserService userService;
+    private final EventService eventService;
+    private final UserService userService;
+
+    public ProfileController(EventService eventService, UserService userService) {
+        this.eventService = eventService;
+        this.userService = userService;
+    }
 
     @GetMapping(path = "/{username}")
     public String show(@PathVariable("username") String username, Model model) {
         String currentuser = SecurityContextHolder.getContext().getAuthentication().getName();
         model.addAttribute("user", userService.getUser(currentuser));
+        model.addAttribute("events",eventService.getByOwner(currentuser));
         if (!username.equals(currentuser)) {
-            return "redirect:/profile/" + currentuser;
+            return "redirect:/accessDenied/";
         }
         else {
             return "profile/show";
@@ -37,14 +43,18 @@ public class ProfileController {
         if (passmatching == false) {
             return "redirect:/profile/" + username + "?passold";
         }
+        else if (passwordnew == "") {
+            return "redirect:/profile/" + username + "?passempty";
+        }
         else if (!passwordnew.equals(passwordnew2)) {
             return "redirect:/profile/" + username + "?passnew";
         }
         else {
             String currentuser = SecurityContextHolder.getContext().getAuthentication().getName();
             model.addAttribute("user", userService.getUser(currentuser));
+            model.addAttribute("events",eventService.getByOwner(currentuser));
             userService.changePassword(username, passwordnew);
-            return "profile/show";
+            return "redirect:/profile/" + username + "?succ";
         }
     }
 

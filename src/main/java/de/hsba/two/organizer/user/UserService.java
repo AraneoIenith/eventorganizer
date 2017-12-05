@@ -23,6 +23,7 @@ public class UserService {
         createUser("00000","Anna", "00000", "HR");
         createUser("11111","Berta", "11111", "ORGANIZER");
         createUser("22222", "Conny", "22222", "USER");
+        createUser("33333","Dora", "33333", "ORGANIZER");
     }
 
     private void createUser(String username, String firstname, String password, String role) {

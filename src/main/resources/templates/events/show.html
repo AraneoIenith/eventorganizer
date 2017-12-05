@@ -8,12 +8,13 @@
         <a class="btn btn-xs btn-link pull-right" href="/events/">Zu den Veranstaltungen</a>
         <h1 th:text="${'Veranstaltung: ' + event.name}"></h1>
         <h4 th:text="${'Kategorie: ' + event.category}"></h4>
-        <form th:action="${'/events/' + event.id + '/delete'}" method="post" class="form">
+<br>
+        <form th:if="${#httpServletRequest.remoteUser eq event.owner}" th:action="${'/events/' + event.id + '/delete'}" method="post" class="form">
             <button type="submit" class="btn btn-danger">Löschen</button>
         </form>
     </div>
 
-    <table th:if="${!event.times.empty}" class="table table-bordered">
+    <table class="table table-bordered">
         <tr>
             <th>Termin</th>
             <th>Datum</th>
@@ -28,8 +29,10 @@
             <td><a class="btn btn-info" th:href="${'/eventtime/' + time.id}">Anschauen</a></td>
         </tr>
     </table>
-
-    <div>
+    <p th:if="${event.times.empty}">Es gibt derzeit keine Termine zu der Veranstaltung.</p>
+<br>
+<br>
+    <div th:if="${#httpServletRequest.remoteUser eq event.owner}">
         <h2>Neuer Termin</h2>
         <form th:action="${'/events/' + event.id}" method="post" class="form-inline">
             <input name="title" type="text" placeholder="Titel des Termins" class="form-control"/>
@@ -40,8 +43,6 @@
             <button type="submit" class="btn btn-primary">Eintragen</button>
         </form>
     </div>
-
-    <hr/>
 
 </div>
 </body>

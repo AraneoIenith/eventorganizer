@@ -22,7 +22,12 @@ public class EventTimeController {
     @GetMapping
     public String show(@PathVariable("id") Long id, Model model) {
         model.addAttribute("eventtime", eventService.findTime(id));
-        return "events/eventtime";
+        EventTime eventtime = eventService.findTime(id);
+        if (eventtime == null) {
+            throw new NotFoundException();
+        } else {
+            return "events/eventtime";
+        }
     }
 
     @PostMapping(path = "/signup")

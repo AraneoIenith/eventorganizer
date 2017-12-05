@@ -4,6 +4,7 @@ import de.hsba.two.organizer.event.Event;
 import de.hsba.two.organizer.event.EventService;
 import de.hsba.two.organizer.event.EventTime;
 import de.hsba.two.organizer.user.UserService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class EventController {
 
     private final EventService eventService;
-
     private final UserService userService;
 
     public EventController(EventService eventService, UserService userService) {
@@ -33,14 +33,20 @@ public class EventController {
 
     @PostMapping
     public String create(String name, String category){
-        Event event = eventService.createEvent(name, category);
+        String owner = SecurityContextHolder.getContext().getAuthentication().getName();
+        Event event = eventService.createEvent(name, category, owner);
         return "redirect:/events/" + event.getId();
     }
 
     @GetMapping(path = "/{id}")
     public String show(@PathVariable("id") Long id, Model model){
         model.addAttribute("event", eventService.getEvent(id));
-        return "events/show";
+        Event event = eventService.getEvent(id);
+        if (event == null) {
+            throw new NotFoundException();
+        } else {
+            return "events/show";
+        }
     }
 
     @PostMapping(path = "/{id}")

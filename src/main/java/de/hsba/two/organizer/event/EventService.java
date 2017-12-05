@@ -26,10 +26,13 @@ public class EventService {
         return repository.findAll();
     }
 
-    public Event createEvent(String name, String category) {
+    public Collection<Event> getByOwner(String currentuser) {return repository.findByOwner(currentuser);}
+
+    public Event createEvent(String name, String category, String owner) {
         Event event = new Event();
         event.setName(name);
         event.setCategory(category);
+        event.setOwner(owner);
         return repository.save(event); // save one entity
     }
 
@@ -59,8 +62,8 @@ public class EventService {
 
     @PostConstruct
     public void init() {
-        createEvent("Haspa Selbstverteidigung", "Kampf");
-        createEvent("Selbstbemitleidung", "Erbärmlich");
+        createEvent("Haspa Selbstverteidigung", "Kampf", "11111");
+        createEvent("Selbstbemitleidung", "Erbärmlich", "33333");
     }
 
     public Event getEvent(Long id) {
@@ -79,6 +82,5 @@ public class EventService {
     public void delete(Long id) {
         repository.delete(id);
     }
-
 
 }

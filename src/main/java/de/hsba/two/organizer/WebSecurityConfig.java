@@ -23,6 +23,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/users/**").hasRole("HR")
                 .antMatchers("/create/**").hasRole("ORGANIZER")
                 .anyRequest().authenticated()
+                .and().exceptionHandling().accessDeniedPage("/accessDenied")
                 .and().formLogin().loginPage("/login").permitAll()
                 .and().logout().permitAll();
     }

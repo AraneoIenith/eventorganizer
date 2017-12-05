@@ -7,7 +7,7 @@
     <div class="page-header">
         <form action="/logout" class="pull-right" method="post">
             <button type="submit" class="btn btn-xs btn-link">
-                <span th:text="${#httpServletRequest.remoteUser}" />
+                <span th:text="${#httpServletRequest.remoteUser}"/>
                 Abmelden
             </button>
         </form>
@@ -22,6 +22,7 @@
                 <th>Veranstaltung</th>
                 <th>Kategorie</th>
             </tr>
+            <p th:if="${event.empty}">Zur Zeit gibt es keine Veranstaltungen.</p>
             <tr th:each="event : ${event}">
                 <td>
                     <a th:href="${'/events/' + event.id}" th:text="${event.name}"></a>
@@ -31,7 +32,7 @@
         </table>
     </div>
 
-    <form action="/events" method="post" class="form-inline">
+    <form sec:authorize="hasRole('ORGANIZER')" action="/events" method="post" class="form-inline">
         <input name="name" type="text" placeholder="Name" class="form-control">
         <input name="category" type="text" placeholder="Kategorie" class="form-control">
         <button type="submit" class="btn btn-primary">Anlegen</button>
