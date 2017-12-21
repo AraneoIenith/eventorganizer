@@ -9,7 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/eventtime/{id}")
+@RequestMapping("/eventtime")
 public class EventTimeController {
 
     private final EventService eventService;
@@ -32,7 +32,7 @@ public class EventTimeController {
         return eventService.getParticipantsSize(id);
     }
 
-    @GetMapping
+    @GetMapping(path = "{id}")
     public String show(@PathVariable("id") Long id, Model model) {
         model.addAttribute("eventtime", eventService.findTime(id));
         EventTime eventtime = eventService.findTime(id);
@@ -44,7 +44,7 @@ public class EventTimeController {
     }
 
     //Anmeldung zu einem Termin
-    @PostMapping(path = "/signup")
+    @PostMapping(path = "/{id}/signup")
     public String signup(@PathVariable("id") Long id) {
         EventTime eventTime = eventService.findTime(id);
         eventService.signUp(eventTime);
@@ -52,11 +52,18 @@ public class EventTimeController {
     }
 
     //Abmeldung zu einem Termin
-    @PostMapping(path = "/signout")
+    @PostMapping(path = "/{id}/signout")
     public String signout(@PathVariable("id") Long id) {
         EventTime eventTime = eventService.findTime(id);
         eventService.signOut(eventTime);
         return "redirect:/eventtime/" + id;
+    }
+
+    @PostMapping(path = "/{id}/delete")
+    public String delete(@PathVariable("id") Long id){
+        Long eventId = eventService.findTime(id).getEvent().getId();
+        eventService.deleteTime(id);
+        return "redirect:/events/" + eventId;
     }
 
 

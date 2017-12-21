@@ -82,4 +82,6 @@ public class EventService {
         repository.delete(id);
     }
 
+    public void deleteTime(Long id){timeRepository.delete(id);}
+
 }
