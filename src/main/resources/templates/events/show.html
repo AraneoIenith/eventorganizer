@@ -25,7 +25,7 @@
             <td th:text="${time.title}"></td>
             <td th:text="${time.date}"></td>
             <td th:text="${time.time}"></td>
-            <td th:text="${time.maxParticipants}"></td>
+            <td><span th:text="${time.participants.size()}"/> von <span th:text="${time.maxParticipants}"/></td>
             <td><a class="btn btn-info" th:href="${'/eventtime/' + time.id}">Anschauen</a></td>
         </tr>
     </table>

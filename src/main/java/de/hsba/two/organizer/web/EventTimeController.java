@@ -2,6 +2,7 @@ package de.hsba.two.organizer.web;
 
 import de.hsba.two.organizer.event.EventService;
 import de.hsba.two.organizer.event.EventTime;
+import de.hsba.two.organizer.user.User;
 import de.hsba.two.organizer.user.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +20,18 @@ public class EventTimeController {
         this.userService = userService;
     }
 
+    //Aktuellen Nutzer zum Abgleich mit der Teilnehmerliste vorhanden haben
+    @ModelAttribute("currentUser")
+    public User getCurrentUser() {
+        return eventService.getCurrentUserObj();
+    }
+
+    //Größe der Teilnehmerliste zum Abgleich mit der maximalen Zahl an Teilnehmern
+    @ModelAttribute("participantsSize")
+    public Integer getPasrticipantsSize(@PathVariable("id") Long id){
+        return eventService.getParticipantsSize(id);
+    }
+
     @GetMapping
     public String show(@PathVariable("id") Long id, Model model) {
         model.addAttribute("eventtime", eventService.findTime(id));
@@ -30,20 +43,26 @@ public class EventTimeController {
         }
     }
 
+    //Anmeldung zu einem Termin
     @PostMapping(path = "/signup")
     public String signup(@PathVariable("id") Long id) {
         EventTime eventTime = eventService.findTime(id);
-        if (eventService.isSignedUp(eventTime)) {
-            return "redirect:/eventtime/"+ id;
-        } else {
-            eventService.signUp(eventTime);
-            return "redirect:/eventtime/"+ id;
-        }
+        eventService.signUp(eventTime);
+        return "redirect:/eventtime/" + id;
+    }
+
+    //Abmeldung zu einem Termin
+    @PostMapping(path = "/signout")
+    public String signout(@PathVariable("id") Long id) {
+        EventTime eventTime = eventService.findTime(id);
+        eventService.signOut(eventTime);
+        return "redirect:/eventtime/" + id;
     }
 
 
-    //Falls die Seite auch gleichzeitig zum Bearbeiten dienen soll.
-    //Damit man gleich zwei ModelAttribute hat (eventtime und formEvent)
+
+//Falls die Seite auch gleichzeitig zum Bearbeiten dienen soll.
+//Damit man gleich zwei ModelAttribute hat (eventtime und formEvent)
    /* @ModelAttribute("eventtime")
     public EventTime getEventTime(@PathVariable("id") Long id) {
         EventTime time = eventService.findTime(id);

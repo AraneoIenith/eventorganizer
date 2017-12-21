@@ -16,15 +16,19 @@
         <div class="col-md-4">Beschreibung:</div>
         <div class="col-md-4" th:text="${eventtime.description}"></div>
     </div>
-    <div class="row">
-        <ol <!--th:if="${!eventtime.participants.empty}-->">
-            Teilnehmer
-            <li th:each="eventtime : ${eventtime}" th:text="${eventtime.participants}">
-            </li>
+    <div class="row" th:if="${!eventtime.participants.empty}">
+        Teilnehmer:
+        <ol>
+            <li th:each="participant : ${eventtime.participants}"><span th:text="${participant.firstname}"></span> (<span th:text="${participant.username}"></span>)</li>
         </ol>
     </div>
-    <form th:action="${'/eventtime/' + eventtime.id + '/signup'}" method="post" class="form">
-        <button type="submit" class="btn btn-primary">Für diese Veranstaltung anmelden</button>
+    <form th:action="${'/eventtime/' + eventtime.id + '/signup'}" method="post" class="form"
+          th:if="${!#lists.contains(eventtime.participants, currentUser) and !participantsSize.equals(eventtime.maxParticipants)}">
+        <button type="submit" class="btn btn-primary">Für diesen Termin anmelden</button>
+    </form>
+    <form th:action="${'/eventtime/' + eventtime.id + '/signout'}" method="post" class="form"
+          th:if="${#lists.contains(eventtime.participants, currentUser)}">
+        <button type="submit" class="btn btn-warning">Für diesen Termin abmelden</button>
     </form>
 
 </div>

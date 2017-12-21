@@ -36,28 +36,27 @@ public class EventService {
         return repository.save(event); // save one entity
     }
 
-    public User getCurrentUserObj(){
+    //Den aktuellen User (-namen) aus dem Security Context holen
+    public User getCurrentUserObj() {
         String currentuser = SecurityContextHolder.getContext().getAuthentication().getName();
         return timeRepository.findCurrentUser(currentuser);
     }
 
-    public boolean isSignedUp(EventTime eventTime) {
-
-        User currentuserobj = getCurrentUserObj();
-        List<User> currentParticipants = eventTime.getParticipants();
-
-        if (currentParticipants.contains(currentuserobj)) {
-            return true;
-        } else {
-            return false;
-        }
+    public Integer getParticipantsSize(Long id) {
+        EventTime eventTime = findTime(id);
+        return eventTime.getParticipants().size();
     }
 
     public void signUp(EventTime eventTime) {
         User currentuserobj = getCurrentUserObj();
         List<User> currentParticipants = eventTime.getParticipants();
         currentParticipants.add(currentuserobj);
+    }
 
+    public void signOut(EventTime eventTime) {
+        User currentuserobj = getCurrentUserObj();
+        List<User> currentParticipants = eventTime.getParticipants();
+        currentParticipants.remove(currentuserobj);
     }
 
     @PostConstruct
