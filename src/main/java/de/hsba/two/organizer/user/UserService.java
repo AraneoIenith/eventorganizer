@@ -1,5 +1,6 @@
 package de.hsba.two.organizer.user;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,18 +21,25 @@ public class UserService {
 
     @PostConstruct
     public void init() {
-        createUser("00000","Anna", "00000", "HR");
-        createUser("11111","Berta", "11111", "ORGANIZER");
+        createUser("00000", "Anna", "00000", "HR");
+        createUser("11111", "Berta", "11111", "ORGANIZER");
         createUser("22222", "Conny", "22222", "USER");
-        createUser("33333","Dora", "33333", "ORGANIZER");
+        createUser("33333", "Dora", "33333", "ORGANIZER");
     }
 
     private void createUser(String username, String firstname, String password, String role) {
         userRepository.save(new User(username, firstname, passwordEncoder.encode(password), role));
     }
 
-    public User getUser(String username) {
-       return userRepository.findByName(username);
+    //Das User Objekt des aktuellen Nutzers
+    public User getUserObj() {
+        String currentuser = SecurityContextHolder.getContext().getAuthentication().getName();
+        return userRepository.findByName(currentuser);
+    }
+
+    //Der Username (Personalnummer) des aktuellen Nutzers
+    public String getUserName(){
+        return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 
     public List<User> findAll() {
@@ -39,10 +47,15 @@ public class UserService {
     }
 
     public void changePassword(String username, String passwordnew) {
-        userRepository.changePassword(username, passwordEncoder.encode(passwordnew));}
+        userRepository.changePassword(username, passwordEncoder.encode(passwordnew));
+    }
 
-    public String getPassword(String username) {return userRepository.findPassword(username);}
+    public String getPassword(String username) {
+        return userRepository.findPassword(username);
+    }
 
-    public boolean EncPass(String passwordold, String password) {return passwordEncoder.matches(passwordold, password);}
+    public boolean EncPass(String passwordold, String password) {
+        return passwordEncoder.matches(passwordold, password);
+    }
 
 }

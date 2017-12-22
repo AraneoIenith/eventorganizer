@@ -23,7 +23,7 @@ public class EventTimeController {
     //Aktuellen Nutzer zum Abgleich mit der Teilnehmerliste vorhanden haben
     @ModelAttribute("currentUser")
     public User getCurrentUser() {
-        return eventService.getCurrentUserObj();
+        return userService.getUserObj();
     }
 
     //Größe der Teilnehmerliste zum Abgleich mit der maximalen Zahl an Teilnehmern

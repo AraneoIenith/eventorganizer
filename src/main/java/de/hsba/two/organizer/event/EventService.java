@@ -1,11 +1,11 @@
 package de.hsba.two.organizer.event;
 
 import de.hsba.two.organizer.user.User;
+import de.hsba.two.organizer.user.UserService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
 import java.util.Collection;
 import java.util.List;
 
@@ -15,31 +15,25 @@ public class EventService {
 
     private final EventRepository repository;
     private final EventTimeRepository timeRepository;
+    private final UserService userService;
 
 
-    public EventService(EventRepository repository, EventTimeRepository timeRepository) {
+    public EventService(EventRepository repository, EventTimeRepository timeRepository, UserService userService) {
         this.repository = repository;
         this.timeRepository = timeRepository;
+        this.userService = userService;
     }
 
     public Collection<Event> getAll() {
         return repository.findAll();
     }
 
-    public Collection<Event> getByOwner(String currentuser) {return repository.findByOwner(currentuser);}
+    public Collection<Event> getByOwner() {
+        User currentuser = userService.getUserObj();
+        return repository.findByOwner(currentuser);}
 
-    public Event createEvent(String name, String category, String owner) {
-        Event event = new Event();
-        event.setName(name);
-        event.setCategory(category);
-        event.setOwner(owner);
+    public Event createEvent(Event event) {
         return repository.save(event); // save one entity
-    }
-
-    //Den aktuellen User (-namen) aus dem Security Context holen
-    public User getCurrentUserObj() {
-        String currentuser = SecurityContextHolder.getContext().getAuthentication().getName();
-        return timeRepository.findCurrentUser(currentuser);
     }
 
     public Integer getParticipantsSize(Long id) {
@@ -48,22 +42,24 @@ public class EventService {
     }
 
     public void signUp(EventTime eventTime) {
-        User currentuserobj = getCurrentUserObj();
+        User currentuserobj = userService.getUserObj();
         List<User> currentParticipants = eventTime.getParticipants();
         currentParticipants.add(currentuserobj);
     }
 
     public void signOut(EventTime eventTime) {
-        User currentuserobj = getCurrentUserObj();
+        User currentuserobj = userService.getUserObj();
         List<User> currentParticipants = eventTime.getParticipants();
         currentParticipants.remove(currentuserobj);
     }
 
-    @PostConstruct
+    /*@PostConstruct
     public void init() {
-        createEvent("Haspa Selbstverteidigung", "Kampf", "11111");
-        createEvent("Selbstbemitleidung", "Erbärmlich", "33333");
-    }
+        Event event = new Event();
+        event.setName("Haspa Selbsverteidigung");
+        event.setCategory("Kampf");
+        createEvent(event, "11111");
+    }*/
 
     public Event getEvent(Long id) {
         return repository.findOne(id);

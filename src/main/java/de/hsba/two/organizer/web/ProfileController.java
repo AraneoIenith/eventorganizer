@@ -1,6 +1,7 @@
 package de.hsba.two.organizer.web;
 
 import de.hsba.two.organizer.event.EventService;
+import de.hsba.two.organizer.user.User;
 import de.hsba.two.organizer.user.UserService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -24,10 +25,11 @@ public class ProfileController {
 
     @GetMapping(path = "/{username}")
     public String show(@PathVariable("username") String username, Model model) {
-        String currentuser = SecurityContextHolder.getContext().getAuthentication().getName();
-        model.addAttribute("user", userService.getUser(currentuser));
-        model.addAttribute("events",eventService.getByOwner(currentuser));
-        if (!username.equals(currentuser)) {
+        User currentUserObj = userService.getUserObj();
+        String currentUserName = userService.getUserName();
+        model.addAttribute("user", currentUserObj);
+        model.addAttribute("events",eventService.getByOwner());
+        if (!username.equals(currentUserName)) {
             return "redirect:/accessDenied/";
         }
         else {
@@ -50,9 +52,6 @@ public class ProfileController {
             return "redirect:/profile/" + username + "?passnew";
         }
         else {
-            String currentuser = SecurityContextHolder.getContext().getAuthentication().getName();
-            model.addAttribute("user", userService.getUser(currentuser));
-            model.addAttribute("events",eventService.getByOwner(currentuser));
             userService.changePassword(username, passwordnew);
             return "redirect:/profile/" + username + "?succ";
         }

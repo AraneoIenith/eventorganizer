@@ -29,7 +29,7 @@
             <td><span th:text="${time.participants.size()}"/> von <span th:text="${time.maxParticipants}"/></td>
             <td>
                 <a class="btn btn-info" th:href="${'/eventtime/' + time.id}">Anschauen</a>
-                <form th:if="${#httpServletRequest.remoteUser eq event.owner}"
+                <form th:if="${#httpServletRequest.remoteUser eq event.owner.username}"
                       th:action="${'/eventtime/'+ time.id + '/delete'}" method="post" class="form">
                     <button type="submit" class="btn btn-danger">Löschen</button>
                 </form>
@@ -39,7 +39,7 @@
     <p th:if="${event.times.empty}">Es gibt derzeit keine Termine zu der Veranstaltung.</p>
     <br>
     <br>
-    <div th:if="${#httpServletRequest.remoteUser eq event.owner}">
+    <div th:if="${#httpServletRequest.remoteUser eq event.owner.username}">
         <h2>Neuer Termin</h2>
         <form th:action="${'/events/' + event.id}" method="post" class="form-inline">
             <input name="title" type="text" placeholder="Titel des Termins" class="form-control"/>

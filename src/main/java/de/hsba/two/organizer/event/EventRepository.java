@@ -1,5 +1,6 @@
 package de.hsba.two.organizer.event;
 
+import de.hsba.two.organizer.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -11,6 +12,6 @@ import java.util.Collection;
 public interface EventRepository extends JpaRepository<Event, Long>{
 
     @Query("select e from Event e where e.owner = :currentuser")
-    Collection<Event> findByOwner(@Param("currentuser") String currentuser);
+    Collection<Event> findByOwner(@Param("currentuser") User currentuser);
 
 }

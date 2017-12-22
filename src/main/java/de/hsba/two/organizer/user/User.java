@@ -1,5 +1,7 @@
 package de.hsba.two.organizer.user;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,6 +9,14 @@ import javax.persistence.Id;
 
 @Entity
 public class User {
+
+    public static User getCurrentUser() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserAdapter) {
+            return ((UserAdapter) principal).getUser();
+        }
+        return null;
+    }
 
     @Id
     @GeneratedValue

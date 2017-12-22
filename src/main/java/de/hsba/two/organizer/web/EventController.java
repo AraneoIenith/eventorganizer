@@ -7,10 +7,11 @@ import de.hsba.two.organizer.user.UserService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.security.acl.Owner;
 
 @Controller
 @RequestMapping("/events")
@@ -27,14 +28,17 @@ public class EventController {
 
     @GetMapping
     public String index(Model model) {
-        model.addAttribute("event", eventService.getAll());
+        model.addAttribute("events", eventService.getAll());
+        model.addAttribute("event", new Event());
         return "events/index";
     }
 
     @PostMapping
-    public String create(String name, String category){
-        String owner = SecurityContextHolder.getContext().getAuthentication().getName();
-        Event event = eventService.createEvent(name, category, owner);
+    public String create(@ModelAttribute("event") @Valid Event event, BindingResult binding){
+        if (binding.hasErrors()){
+            return "events/index";
+        }
+        event = eventService.createEvent(event);
         return "redirect:/events/" + event.getId();
     }
 

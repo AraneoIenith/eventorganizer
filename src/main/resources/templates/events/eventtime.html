@@ -16,8 +16,9 @@
         <div class="col-md-4">Beschreibung:</div>
         <div class="col-md-4" th:text="${eventtime.description}"></div>
     </div>
-    <div class="row" th:if="${!eventtime.participants.empty}">
-        Teilnehmer:
+    <br>
+    <br>
+    <div class="row" th:if="${!eventtime.participants.empty}">Teilnehmer:
         <ol>
             <li th:each="participant : ${eventtime.participants}"><span th:text="${participant.firstname}"></span> (<span th:text="${participant.username}"></span>)</li>
         </ol>
