@@ -1,8 +1,10 @@
 package de.hsba.two.organizer.event;
 
 import de.hsba.two.organizer.user.User;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,29 +18,40 @@ public class EventTime {
     @ManyToOne
     private Event event;
 
+    @NotBlank(message = "Bitte geben Sie einen Titel ein")
+    @Basic(optional = false)
     private String title;
 
+    @NotNull(message = "Bitte geben Sie eine maximale Teilnehmerzahl an")
+    @Basic(optional = false)
     private Integer maxParticipants;
 
+    @NotBlank(message = "Bitte geben Sie eine Beschreibung ein")
+    @Basic(optional = false)
+    @Column(columnDefinition="TEXT")
     private String description;
 
+    @NotBlank(message = "Bitte wählen Sie ein Datum aus")
+    @Basic(optional = false)
     private String date;
 
+    @NotBlank(message = "Bitte geben Sie eine Uhrzeit an")
+    @Basic(optional = false)
     private String time;
 
     @ManyToMany
     private List<User> participants;
 
 
+    public EventTime() {
+    }
 
-    public EventTime(){}
-
-    public EventTime(String title, Integer maxParticipants, String description, Event event, String date, String time){
+    public EventTime(String title, Integer maxParticipants, String description, Event event, String date, String time) {
         this.title = title;
         this.maxParticipants = maxParticipants;
         this.description = description;
         this.date = date;
-        this.time= time;
+        this.time = time;
         this.event = event;
     }
 
@@ -72,7 +85,7 @@ public class EventTime {
     }
 
     public List<User> getParticipants() {
-        if (participants == null){
+        if (participants == null) {
             participants = new ArrayList<>();
         }
         return participants;

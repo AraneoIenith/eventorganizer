@@ -41,12 +41,30 @@
     <br>
     <div th:if="${#httpServletRequest.remoteUser eq event.owner.username}">
         <h2>Neuer Termin</h2>
-        <form th:action="${'/events/' + event.id}" method="post" class="form-inline">
-            <input name="title" type="text" placeholder="Titel des Termins" class="form-control"/>
-            <input name="description" type="text" placeholder="Beschreibung" class="form-control"/>
-            <input name="maxParticipants" type="number" placeholder="Höchstteilnehmerzahl" class="form-control"/>
-            <input name="date" type="text" placeholder="Datum" class="form-control"/>
-            <input name="time" type="text" placeholder="Uhrzeit" class="form-control"/>
+        <form th:action="${'/events/' + event.id + '/eventTime'}" method="post" th:object="${eventTime}">
+            <div class="form-group">
+                <input name="title" type="text" placeholder="Titel des Termins" class="form-control"
+                       th:field="*{title}"/>
+                <label class="text-danger" th:errors="*{title}"/>
+            </div>
+            <div class="form-group">
+                <input name="description" type="text" placeholder="Beschreibung" class="form-control"
+                       th:field="*{description}"/>
+                <label class="text-danger" th:errors="*{description}"/>
+            </div>
+            <div class="form-group">
+                <input name="maxParticipants" type="number" placeholder="Höchstteilnehmerzahl" class="form-control"
+                       th:field="*{maxParticipants}"/>
+                <label class="text-danger" th:errors="*{maxParticipants}"/>
+            </div>
+            <div class="form-group">
+                <input name="date" type="date" placeholder="Datum" class="form-control" th:field="*{date}"/>
+                <label class="text-danger" th:errors="*{date}"/>
+            </div>
+            <div class="form-group">
+                <input name="time" type="time" placeholder="Uhrzeit" class="form-control" th:field="*{time}"/>
+                <label class="text-danger" th:errors="*{time}"/>
+            </div>
             <button type="submit" class="btn btn-primary">Eintragen</button>
         </form>
     </div>
