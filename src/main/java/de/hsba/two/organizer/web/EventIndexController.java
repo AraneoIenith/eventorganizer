@@ -33,7 +33,7 @@ public class EventIndexController {
 
     @GetMapping
     public String index(Model model) {
-        model.addAttribute("event", new Event());
+         model.addAttribute("event", new Event());
         return "events/index";
     }
 

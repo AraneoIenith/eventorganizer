@@ -28,7 +28,8 @@ public class ProfileController {
         User currentUserObj = userService.getUserObj();
         String currentUserName = userService.getUserName();
         model.addAttribute("user", currentUserObj);
-        model.addAttribute("events",eventService.getByOwner());
+        model.addAttribute("events",eventService.getEventsByOwner());
+        model.addAttribute("UserEventTimes", eventService.getUserEventTimes());
         if (!username.equals(currentUserName)) {
             return "redirect:/accessDenied/";
         }

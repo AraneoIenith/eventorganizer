@@ -2,7 +2,6 @@ package de.hsba.two.organizer.event;
 
 import de.hsba.two.organizer.user.User;
 import de.hsba.two.organizer.user.UserService;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,9 +27,16 @@ public class EventService {
         return repository.findAll();
     }
 
-    public Collection<Event> getByOwner() {
+    public Collection<Event> getEventsByOwner() {
         User currentuser = userService.getUserObj();
-        return repository.findByOwner(currentuser);}
+        return repository.findByOwner(currentuser);
+    }
+
+    //Liste mit Terminen, zu denen sich der User angemeldet hat
+    public List<EventTime> getUserEventTimes() {
+        User currentuser = userService.getUserObj();
+        return timeRepository.findUserEventTimes(currentuser);
+    }
 
     public Event createEvent(Event event) {
         return repository.save(event); // save one entity
@@ -78,6 +84,8 @@ public class EventService {
         repository.delete(id);
     }
 
-    public void deleteTime(Long id){timeRepository.delete(id);}
+    public void deleteTime(Long id) {
+        timeRepository.delete(id);
+    }
 
 }

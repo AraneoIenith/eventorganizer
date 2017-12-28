@@ -9,28 +9,32 @@
         <h1 th:text="${'Veranstaltung: ' + event.name}"></h1>
         <h4 th:text="${'Kategorie: ' + event.category}"></h4>
         <br>
-        <form th:if="${#httpServletRequest.remoteUser eq event.owner}" th:action="${'/events/' + event.id + '/delete'}"
+        <form th:if="${#httpServletRequest.remoteUser.equals(event.owner.username)}"
+              th:action="${'/events/' + event.id + '/delete'}"
               method="post" class="form">
             <button type="submit" class="btn btn-danger">Löschen</button>
         </form>
     </div>
 
-    <table class="table table-bordered">
+    <table class="table" th:if="${!event.times.empty}">
         <tr>
             <th>Termin</th>
             <th>Datum</th>
             <th>Uhrzeit</th>
+            <th>Dauer</th>
             <th>Teilnehmer</th>
         </tr>
         <tr th:each="time : ${event.times}">
             <td th:text="${time.title}"></td>
             <td th:text="${time.date}"></td>
             <td th:text="${time.time}"></td>
+            <td th:text="${time.duration} + ' Std.'"></td>
             <td><span th:text="${time.participants.size()}"/> von <span th:text="${time.maxParticipants}"/></td>
             <td>
                 <a class="btn btn-info" th:href="${'/eventtime/' + time.id}">Anschauen</a>
-                <form th:if="${#httpServletRequest.remoteUser eq event.owner.username}"
-                      th:action="${'/eventtime/'+ time.id + '/delete'}" method="post" class="form">
+            </td>
+            <td th:if="${#httpServletRequest.remoteUser eq event.owner.username}">
+                <form th:action="${'/eventtime/'+ time.id + '/delete'}" method="post" class="form">
                     <button type="submit" class="btn btn-danger">Löschen</button>
                 </form>
             </td>
@@ -57,13 +61,17 @@
                        th:field="*{maxParticipants}"/>
                 <label class="text-danger" th:errors="*{maxParticipants}"/>
             </div>
-            <div class="form-group">
+            <div class="form-group">Datum
                 <input name="date" type="date" placeholder="Datum" class="form-control" th:field="*{date}"/>
                 <label class="text-danger" th:errors="*{date}"/>
             </div>
-            <div class="form-group">
+            <div class="form-group">Uhrzeit
                 <input name="time" type="time" placeholder="Uhrzeit" class="form-control" th:field="*{time}"/>
                 <label class="text-danger" th:errors="*{time}"/>
+            </div>
+            <div class="form-group">Dauer des Termins
+                <input name="duration" type="time" placeholder="Dauer des Termins" class="form-control" th:field="*{duration}"/>
+                <label class="text-danger" th:errors="*{duration}"/>
             </div>
             <button type="submit" class="btn btn-primary">Eintragen</button>
         </form>

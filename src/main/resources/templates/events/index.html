@@ -17,14 +17,12 @@
         <h1>Veranstaltungskalender</h1>
     </div>
 
-    <div class="row">
+    <div class="row" th:if="${!events.empty}">
         <table class="table table-striped">
             <tr>
                 <th>Veranstaltung</th>
                 <th>Kategorie</th>
             </tr>
-            <!--Funktioniert in der Form nicht mit der Validierung-->
-            <!--<p th:if="${events.empty}">Zur Zeit gibt es keine Veranstaltungen.</p>-->
             <tr th:each="event : ${events}">
                 <td>
                     <a th:href="${'/events/' + event.id}" th:text="${event.name}"></a>
@@ -33,6 +31,7 @@
             </tr>
         </table>
     </div>
+    <p th:if="${events.empty}">Zur Zeit gibt es keine Veranstaltungen.</p>
 
     <form sec:authorize="hasRole('ORGANIZER')" action="/events" method="post" th:object="${event}">
         <div class="form-group">

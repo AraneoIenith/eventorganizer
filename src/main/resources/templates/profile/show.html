@@ -13,6 +13,35 @@
     <h1>Hallo <span th:text="${user.firstname}"></span>!</h1>
     <br>
     <br>
+    <div th:if="${!UserEventTimes.empty}">
+        <h3>Deine Termine:</h3>
+        <table class="table">
+            <tr>
+                <th>Veranstaltung</th>
+                <th>Termin</th>
+                <th>Datum</th>
+                <th>Uhrzeit</th>
+                <th>Dauer</th>
+            </tr>
+            <tr th:each="time : ${UserEventTimes}">
+                <td th:text="${time.event.name}"></td>
+                <td th:text="${time.title}"></td>
+                <td th:text="${time.date}"></td>
+                <td th:text="${time.time}"></td>
+                <td th:text="${time.duration + ' Std.'}"></td>
+                <td>
+                    <a class="btn btn-info" th:href="${'/eventtime/' + time.id}">Anschauen</a>
+                </td>
+                <td>
+                    <form th:action="${'/eventtime/' + time.id + '/signout'}" method="post" class="form">
+                        <button type="submit" class="btn btn-warning">Abmelden</button>
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <br>
+    <br>
     <h3>Hier kannst du deine Benutzerdaten sehen:</h3>
     <table class="table">
         <tr>
@@ -59,13 +88,13 @@
             <button type="submit" class="btn btn-primary">Passwort ändern</button>
         </div>
     </form>
-<br>
+    <br>
     <div sec:authorize="hasRole('ORGANIZER')">
         <h3>Hier kannst du deine Veranstaltungen sehen:</h3>
         <p th:if="${events.empty}">Sie haben noch keine Veranstaltungen eingestellt.</p>
         <ul class="list-unstyled">
             <li th:each="event : ${events}">
-            <a th:href="${'/events/' + event.id}" th:text="${event.name}"/>
+                <a th:href="${'/events/' + event.id}" th:text="${event.name}"/>
             </li>
         </ul>
     </div>
