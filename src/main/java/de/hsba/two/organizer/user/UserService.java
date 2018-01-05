@@ -33,7 +33,7 @@ public class UserService {
 
     //Das User Objekt des aktuellen Nutzers
     public User getUserObj() {
-        String currentuser = SecurityContextHolder.getContext().getAuthentication().getName();
+        String currentuser = getUserName();
         return userRepository.findByName(currentuser);
     }
 

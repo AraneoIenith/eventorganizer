@@ -31,7 +31,10 @@ public class User {
 
     private String role;
 
-    private User() {
+    public User(){}
+
+    public User(String username) {
+        this.username = username;
     }
 
     public User(String username, String firstname, String password, String role) {
