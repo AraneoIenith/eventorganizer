@@ -50,7 +50,9 @@ public class EventService {
     public void signUp(EventTime eventTime) {
         User currentuserobj = userService.getUserObj();
         List<User> currentParticipants = eventTime.getParticipants();
-        currentParticipants.add(currentuserobj);
+        if (!currentParticipants.contains(currentuserobj)){
+            currentParticipants.add(currentuserobj);
+        }
     }
 
     public void signOut(EventTime eventTime) {
