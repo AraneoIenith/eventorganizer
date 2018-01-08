@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<body>
+<div layout:fragment="content">
+
+    <div class="page-header">
+        <a class="btn btn-xs btn-link pull-right" href="/users/">Zu der Übersicht aller Nutzer</a>
+        <h1 th:text="${'Mitarbeiter '+ user.username + ' bearbeiten'}"></h1>
+    </div>
+    <table class="table">
+        <tr>
+            <th>Benutzernamen ändern</th>
+        </tr>
+    </table>
+    <form th:action="${'/users/edit/username/' + user.username}" method="post" class="form-group">
+        <div th:if="${param.userexist}" class="form-group">
+            <div class="col-sm-offset-2 col-sm-10 text-danger">
+                <strong>Benutzername ist schon vergeben
+                    <br> Bitte einen anderen Benutzernamen angeben</strong>
+            </div>
+        </div>
+        <div th:if="${param.usernameaccepted}" class="form-group">
+            <div class="col-sm-offset-2 col-sm-10 text-success">
+                <strong>Benutzername wurde erfolgreich geändert</strong>
+            </div>
+        </div>
+        <div class="form-inline">
+            <input name="usernamenew" type="text" placeholder="Neuer Benutzername" class="form-control"/>
+            <button type="submit" class="btn btn-primary">Benutzername ändern</button>
+        </div>
+    </form>
+    <table class="table">
+        <tr>
+            <th>Vorname ändern</th>
+        </tr>
+    </table>
+    <form th:action="${'/users/edit/firstname/' + user.username}" method="post" class="form-group">
+        <div th:if="${param.firstnameaccepted}" class="form-group">
+            <div class="col-sm-offset-2 col-sm-10 text-success">
+                <strong>Der Vorname wurde erfolgreich geändert</strong>
+            </div>
+        </div>
+        <div class="form-inline">
+            <input name="firstnamenew" type="text" placeholder="Neuer Vorname" class="form-control"/>
+            <button type="submit" class="btn btn-primary">Vorname ändern</button>
+        </div>
+    </form>
+    <table class="table">
+        <tr>
+            <th>Passwort ändern</th>
+        </tr>
+    </table>
+            <form th:action="${'/users/edit/password/' + user.username}" method="post" class="form-group">
+                <div th:if="${param.passnew}" class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10 text-danger">
+                        <strong>Das neue Passwort wurde nicht korrekt wiederholt</strong>
+                    </div>
+                </div>
+                <div th:if="${param.passempty}" class="form-group">
+                    <div class="col-sm-offset-2 text-danger">
+                        <strong>Das Passwort darf nicht leer sein</strong>
+                    </div>
+                </div>
+                <div th:if="${param.passaccepted}" class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10 text-success">
+                        <strong>Das Passwort wurde erfolgreich geändert</strong>
+                    </div>
+                </div>
+                <div class="form-inline">
+                    <input name="passwordnew" type="password" placeholder="Neues Passwort" class="form-control"/>
+                    <input name="passwordnew2" type="password" placeholder="Neues Passwort wiederholen" class="form-control"/>
+                    <button type="submit" class="btn btn-primary">Passwort ändern</button>
+                </div>
+            </form>
+    <table class="table">
+        <tr>
+            <th>Rolle ändern</th>
+        </tr>
+    </table>
+    <form th:action="${'/users/edit/role/' + user.username}" method="post" class="form-group">
+        <div th:if="${param.roleold}" class="form-group">
+            <div class="col-sm-offset-2 col-sm-10 text-danger">
+                <strong>Der Mitarbeiter hat bereits die Rolle</strong>
+            </div>
+        </div>
+        <div th:if="${param.roleaccepted}" class="form-group">
+            <div class="col-sm-offset-2 col-sm-10 text-success">
+                <strong>Die Rolle wurde erfolgreich geändert</strong>
+            </div>
+        </div>
+        <div class="form-inline">
+            <input name="rolenew" type="text" placeholder="Neue Rolle" class="form-control"/>
+            <button type="submit" class="btn btn-primary">Rolle ändern</button>
+        </div>
+    </form>
+
+</div>
+</body>
+</html>

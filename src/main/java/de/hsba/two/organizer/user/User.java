@@ -1,11 +1,9 @@
 package de.hsba.two.organizer.user;
 
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class User {
@@ -22,23 +20,31 @@ public class User {
     @GeneratedValue
     private Long id;
 
+    @Basic(optional = false)
+    private boolean active;
+
     @Column(unique = true)
+    @Basic(optional = false)
     private String username;
 
+    @Basic(optional = false)
     private String firstname;
 
+    @Basic(optional = false)
     private String password;
 
+    @Basic(optional = false)
     private String role;
 
     private User() {
     }
 
-    public User(String username, String firstname, String password, String role) {
+    public User(String username, String firstname, String password, String role, boolean active) {
         this.username = username;
         this.firstname = firstname;
         this.password = password;
         this.role = role;
+        this.active = true;
     }
 
     public Long getId() { return id; }
@@ -59,7 +65,6 @@ public class User {
         this.role = role;
     }
 
-
     public String getUsername() {
         return username;
     }
@@ -75,4 +80,9 @@ public class User {
     public void setFirstname(String firstname) {
         this.firstname = firstname;
     }
+
+    public void setActive(boolean active) { this.active = true;}
+
+    //Getter bei Boolean ist immer mit is+Attributnamen zu definieren
+    public Boolean isActive() {return this.active;}
 }
