@@ -4,7 +4,6 @@ import de.hsba.two.organizer.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -93,11 +92,17 @@ public class UserController {
 
     }
 
-    //@PostMapping(path = "/deactivate/{username}")
-      //  public String deactivate(@PathVariable("username") String username, boolean deactivate){
-       // userService.changeStatus(username, deactivate);
+    @PostMapping(path = "/deactivate/{username}")
+        public String deactivate(@PathVariable("username") String username){
+        userService.changeToDeactive(username);
 
-        //return "redirect:/users/";
-        //}
+        return "redirect:/users/";
+        }
 
+    @PostMapping(path = "/activate/{username}")
+    public String activate(@PathVariable("username") String username){
+        userService.changeToActive(username);
+
+        return "redirect:/users/";
+    }
 }

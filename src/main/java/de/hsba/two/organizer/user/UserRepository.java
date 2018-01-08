@@ -17,8 +17,8 @@ public interface UserRepository extends JpaRepository<User, String>{
    @Query("select password from User u where u.username = :username")
     String findPassword(@Param("username") String username);
 
-    //@Query("select active from User u where u.username = :username")
-    //String findStatus(@Param("username") String username, @Param("deactivate") boolean deactivate);
+    @Query("select active from User u where u.username = :username")
+    String findStatus(@Param("username") String username);
 
    @Query("update User u set u.password = :passwordnew where u.username = :username")
    @Modifying
@@ -38,11 +38,11 @@ public interface UserRepository extends JpaRepository<User, String>{
 
     @Query("update User u set u.active = false where u.username = :username")
     @Modifying
-    boolean changeDeactivate(@Param("username") String username);
+    void changeDeactivate(@Param("username") String username);
 
     @Query("update User u set u.active = true where u.username = :username")
     @Modifying
-    boolean changeActive(@Param("username") String username);
+    void changeActive(@Param("username") String username);
 
 }
 

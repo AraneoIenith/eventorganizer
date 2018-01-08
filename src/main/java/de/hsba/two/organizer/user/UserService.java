@@ -61,6 +61,8 @@ public class UserService {
         return userRepository.findPassword(username);
     }
 
+    public String getStatus(String username) {return userRepository.findStatus(username);}
+
     public boolean EncPass(String passwordold, String password) {
         return passwordEncoder.matches(passwordold, password);
     }
@@ -85,13 +87,12 @@ public class UserService {
         else return true;
     }
 
-   // public boolean changeStatus (String username, boolean deactivate){
-     //   Object status = userRepository.findStatus(username, deactivate);
+    public void changeToDeactive (String username){
+       userRepository.changeDeactivate(username);
+    }
 
-       // if (status.equals(true))
-         //   status = userRepository.changeDeactivate(username);
-        //else if (status.equals(false))
-          //  status = userRepository.changeActive(username);
-        //return false;
-    //}
+    public void changeToActive (String username) {
+        userRepository.changeActive(username);
+    }
+
 }

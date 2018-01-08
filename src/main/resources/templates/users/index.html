@@ -89,9 +89,14 @@
       </td>
       <td>
           <p><a th:href="${'/users/edit/' + user.username}"><button type="submit" class="btn btn-primary">Bearbeiten</button></a></p>
-          <form th:action="${'/users/deactivate/' + user.username}" method="post" class="form">
-              <button name="deactivate" type="submit" class="btn btn-danger">Deaktivieren</button>
-          </form>
+             <form th:action="${'/users/deactivate/' + user.username}" method="post" class="form"
+                    th:if="${user.active.equals(true)}">
+                  <button type="submit" class="btn btn-danger">Deaktivieren</button>
+              </form>
+              <form th:action="${'/users/activate/' + user.username}" method="post" class="form"
+                    th:if="${user.active.equals(false)}">
+                  <button type="submit" class="btn btn-warning">Aktivieren</button>
+              </form>
       </td>
     </tr>
   </table>
