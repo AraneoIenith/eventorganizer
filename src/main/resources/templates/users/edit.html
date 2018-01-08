@@ -11,24 +11,24 @@
     </div>
     <table class="table">
         <tr>
-            <th>Benutzernamen ändern</th>
+            <th>Personalnummer ändern</th>
         </tr>
     </table>
     <form th:action="${'/users/edit/username/' + user.username}" method="post" class="form-group">
         <div th:if="${param.userexist}" class="form-group">
             <div class="col-sm-offset-2 col-sm-10 text-danger">
-                <strong>Benutzername ist schon vergeben
-                    <br> Bitte einen anderen Benutzernamen angeben</strong>
+                <strong>Personalnummer ist schon vergeben
+                    <br> Bitte eine andere Personalnummer angeben</strong>
             </div>
         </div>
         <div th:if="${param.usernameaccepted}" class="form-group">
             <div class="col-sm-offset-2 col-sm-10 text-success">
-                <strong>Benutzername wurde erfolgreich geändert</strong>
+                <strong>Personalnummer wurde erfolgreich geändert</strong>
             </div>
         </div>
         <div class="form-inline">
-            <input name="usernamenew" type="text" placeholder="Neuer Benutzername" class="form-control"/>
-            <button type="submit" class="btn btn-primary">Benutzername ändern</button>
+            <input name="usernamenew" type="text" placeholder="Neue Personalnummer" class="form-control"/>
+            <button type="submit" class="btn btn-primary">Personalnummer ändern</button>
         </div>
     </form>
     <table class="table">
@@ -80,18 +80,18 @@
         </tr>
     </table>
     <form th:action="${'/users/edit/role/' + user.username}" method="post" class="form-group">
-        <div th:if="${param.roleold}" class="form-group">
-            <div class="col-sm-offset-2 col-sm-10 text-danger">
-                <strong>Der Mitarbeiter hat bereits die Rolle</strong>
-            </div>
-        </div>
         <div th:if="${param.roleaccepted}" class="form-group">
             <div class="col-sm-offset-2 col-sm-10 text-success">
                 <strong>Die Rolle wurde erfolgreich geändert</strong>
             </div>
         </div>
         <div class="form-inline">
-            <input name="rolenew" type="text" placeholder="Neue Rolle" class="form-control"/>
+                <select name="rolenew">
+                    <option value="" disabled selected hidden>auswählen</option>
+                    <option value="HR">HR</option>
+                    <option value="ORGANIZER">ORGANIZER</option>
+                    <option value="USER">USER</option>
+                </select>
             <button type="submit" class="btn btn-primary">Rolle ändern</button>
         </div>
     </form>

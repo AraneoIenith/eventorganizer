@@ -73,6 +73,10 @@ public class UserService {
         userRepository.changeFirstname(username, firstnamenew);
     }
 
+    public void changeRole (String username, String rolenew) {
+        userRepository.changeRole(username, rolenew);
+    }
+
     public boolean matchUser(String usernamenew) {
         Object username = userRepository.findUsername(usernamenew);
 

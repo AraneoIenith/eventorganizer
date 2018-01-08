@@ -15,53 +15,42 @@
         <form th:action="${'/users/create'}" method="post" class="form-inline">
         <tr>
             <th>Vorname</th>
-            <th>Benutzername</th>
+            <th>Personalnummer</th>
             <th>Passwort</th>
             <th>Rolle</th>
         </tr>
         <tr>
             <th>
                 <div class="form-group">
-                    <input name="firstname" type="text" placeholder="Vorname" class="form-control"/>
-                </div>
-                <div th:if="${param.firstnameempty}" class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10 text-danger">
-                        <strong>Bitte einen Vornamen eingeben</strong>
-                    </div>
+                    <input name="firstname" type="text" placeholder="Vorname" class="form-control" required oninvalid="this.setCustomValidity('Bitte einen Vornamen eingeben')"
+                           oninput="setCustomValidity('')"/>
                 </div>
             </th>
             <th>
                 <div class="form-group">
-                    <input name="username" type="text" placeholder="Benutzername" class="form-control"/>
-                </div>
-                <div th:if="${param.userempty}" class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10 text-danger">
-                        <strong>Bitte einen Benutzernamen eingeben</strong>
-                    </div>
+                    <input name="username" type="text" placeholder="Personalnummer" class="form-control" required oninvalid="this.setCustomValidity('Bitte eine Personalnummer eingeben')"
+                           oninput="setCustomValidity('')"/>
                 </div>
             </th>
             <th>
-                <p><input name="password" type="password" placeholder="Passwort" class="form-control"/></p>
-                <input name="password2" type="password" placeholder="Passwort wiederholen" class="form-control"/>
+                <p><input name="password" type="password" placeholder="Passwort" class="form-control" required oninvalid="this.setCustomValidity('Bitte Passwort eingeben')"
+                          oninput="setCustomValidity('')"/></p>
+                <input name="password2" type="password" placeholder="Passwort wiederholen" class="form-control" required oninvalid="this.setCustomValidity('Bitte das Passwort wiederholen')"
+                       oninput="setCustomValidity('')"/>
                 <div th:if="${param.passnew}" class="form-group">
                     <div class="col-sm-offset-2 col-sm-10 text-danger">
                         <strong>Das neue Passwort wurde nicht korrekt wiederholt</strong>
                     </div>
                 </div>
-                <div th:if="${param.passempty}" class="form-group">
-                    <div class="col-sm-offset-2 text-danger">
-                        <strong>Bitte Passwort eingeben</strong>
-                    </div>
-                </div>
             </th>
             <th>
                 <div class="form-group">
-                    <input name="role" type="text" placeholder="Rolle" class="form-control"/>
-                </div>
-                <div th:if="${param.roleempty}" class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10 text-danger">
-                        <strong>Bitte eine Rolle auswählen</strong>
-                    </div>
+                    <select name="role" required>
+                        <option value="" disabled selected hidden>auswählen</option>
+                        <option value="HR">HR</option>
+                        <option value="ORGANIZER">ORGANIZER</option>
+                        <option value="USER">USER</option>
+                    </select>
                 </div>
             </th>
         </tr>
@@ -73,13 +62,20 @@
                     <strong th:text="${'Mitarbeiter wurde erfolgreich angelegt'}"></strong>
                 </div>
             </div>
+            <div th:if="${param.userexist}" class="form-group">
+                <div class="col-sm-offset-2 col-sm-10 text-danger">
+                    <strong>Personalnummer ist schon vergeben
+                        <br> Bitte eine andere Personalnummer angeben</strong>
+                </div>
+            </div>
         </form>
     </table>
+
 
   <h4>Übersicht aller Nutzer</h4>
   <table class="table table-hover">
     <tr>
-      <th>Benutzername</th>
+      <th>Personalnummer</th>
       <th>Vorname</th>
       <th>Rolle</th>
       <th>Aktion</th>

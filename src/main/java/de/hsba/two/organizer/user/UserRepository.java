@@ -32,6 +32,10 @@ public interface UserRepository extends JpaRepository<User, String>{
     @Modifying
     void changeFirstname(@Param ("username") String username, @Param("firstnamenew") String firstnamenew);
 
+    @Query("update User u set u.role = :rolenew where u.username = :username")
+    @Modifying
+    void changeRole(@Param ("username") String username, @Param("rolenew") String rolenew);
+
     @Query("update User u set u.active = false where u.username = :username")
     @Modifying
     boolean changeDeactivate(@Param("username") String username);

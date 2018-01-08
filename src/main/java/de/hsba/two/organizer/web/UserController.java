@@ -66,27 +66,23 @@ public class UserController {
         userService.changefirstname(username, firstnamenew);
             return "redirect:/users/edit/" + username + "?firstnameaccepted";
     }
+    @PostMapping(path = "/edit/role/{username}")
+    public String editrole(@PathVariable("username") String username, String rolenew, Model model)
+    {   model.addAttribute("user", userService.getUser(username));
+        userService.changeRole(username, rolenew);
+        return "redirect:/users/edit/" + username + "?roleaccepted";
+    }
 
     @PostMapping(path = "/create")
-    public String create(Model model, @Valid User user, String username,  String firstname, String password, String password2, String role, BindingResult binding){
-        if (binding.hasErrors()){
-            return "users/";
-        }
+    public String create(@Valid User user, String username,  String firstname, String password, String password2, String role){
 
-        if (password == "" || password2 =="") {
-            return "redirect:/users/" + "?passempty";
-        }
-        else if (!password.equals(password2)) {
+        boolean usermatching = userService.matchUser(username);
+
+        if (usermatching)
+            return "redirect:/users/" + "?userexist";
+
+        if (!password.equals(password2)) {
             return "redirect:/users/" + "?passnew";
-        }
-        else if (firstname =="") {
-            return "redirect:/users/" + "?firstnameempty";
-        }
-        else if (username =="") {
-            return "redirect:/users/" + "?userempty";
-        }
-        else if (role =="") {
-            return "redirect:/users/" + "?roleempty";
         }
         else {
             user = userService.createUser(username, firstname, password, role, true);
