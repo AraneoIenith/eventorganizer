@@ -1,21 +1,48 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.w3.org/1999/xhtml"
       layout:decorate="~{layout}">
 <body>
 <div layout:fragment="content">
     <div class="page-header">
+        <form action="/logout" class="pull-right" method="post">
+            <button type="submit" class="btn btn-xs btn-link">
+                <span th:text="${#httpServletRequest.remoteUser}"/>
+                Abmelden
+            </button>
+        </form>
+        <a sec:authorize="hasRole('HR')" href="/users/" class="btn btn-xs btn-link pull-right">Nutzerverwaltung</a>
+        <a th:href="${'/profile/' + #httpServletRequest.remoteUser}" class="btn btn-xs btn-link pull-right">Mein
+            Profil</a>
         <h1>Veranstaltungskalender</h1>
     </div>
 
-    <ul class="list-unstyled">
-        <li th:each="event : ${event}">
-            <a th:href="${'/events/' + event.id}" th:text="${event.name}"></a>
-        </li>
-    </ul>
+    <div class="row" th:if="${!events.empty}">
+        <table class="table table-striped">
+            <tr>
+                <th>Veranstaltung</th>
+                <th>Kategorie</th>
+            </tr>
+            <tr th:each="event : ${events}">
+                <td>
+                    <a th:href="${'/events/' + event.id}" th:text="${event.name}"></a>
+                </td>
+                <td th:text="${event.category}"></td>
+            </tr>
+        </table>
+    </div>
+    <p th:if="${events.empty}">Zur Zeit gibt es keine Veranstaltungen.</p>
 
-    <form action="/events" method="post" class="form-inline">
-        <input name="name" type="text" placeholder="Name" class="form-control">
+    <form sec:authorize="hasRole('ORGANIZER')" action="/events" method="post" th:object="${event}">
+        <div class="form-group">
+            <label>Neue Veranstaltung anlegen</label>
+            <input name="name" type="text" placeholder="Name" class="form-control" th:field="*{name}">
+            <label class="text-danger" th:errors="*{name}"/>
+        </div>
+        <div class="form-group">
+            <input name="category" type="text" placeholder="Kategorie" class="form-control" th:field="*{category}">
+            <label class="text-danger" th:errors="*{category}"/>
+        </div>
         <button type="submit" class="btn btn-primary">Anlegen</button>
     </form>
 

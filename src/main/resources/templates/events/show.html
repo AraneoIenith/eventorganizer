@@ -5,44 +5,78 @@
 <body>
 <div layout:fragment="content">
     <div class="page-header">
-        <h1 th:text="${'Veranstaltung ' + event.name}"></h1>
-        <form th:action="${'/events/' + event.id + '/delete'}" method="post" class="form">
+        <a class="btn btn-xs btn-link pull-right" href="/events/">Zu den Veranstaltungen</a>
+        <h1 th:text="${'Veranstaltung: ' + event.name}"></h1>
+        <h4 th:text="${'Kategorie: ' + event.category}"></h4>
+        <br>
+        <form th:if="${#httpServletRequest.remoteUser.equals(event.owner.username)}"
+              th:action="${'/events/' + event.id + '/delete'}"
+              method="post" class="form">
             <button type="submit" class="btn btn-danger">Löschen</button>
         </form>
     </div>
 
-    <table th:if="${!event.times.empty}" class="table">
+    <table class="table" th:if="${!event.times.empty}">
         <tr>
-            <th>Veranstaltung</th>
             <th>Termin</th>
-            <th>Beschreibung</th>
-            <th>Höchstteilnehmerzahl</th>
             <th>Datum</th>
+            <th>Uhrzeit</th>
+            <th>Dauer</th>
+            <th>Teilnehmer</th>
         </tr>
         <tr th:each="time : ${event.times}">
-            <td th:text="${time.event.name}"></td>
             <td th:text="${time.title}"></td>
-            <td th:text="${time.description}"></td>
-            <td th:text="${time.maxParticipant}"></td>
             <td th:text="${time.date}"></td>
+            <td th:text="${time.time}"></td>
+            <td th:text="${time.duration} + ' Std.'"></td>
+            <td><span th:text="${time.participants.size()}"/> von <span th:text="${time.maxParticipants}"/></td>
+            <td>
+                <a class="btn btn-info" th:href="${'/eventtime/' + time.id}">Anschauen</a>
+            </td>
+            <td th:if="${#httpServletRequest.remoteUser eq event.owner.username}">
+                <form th:action="${'/eventtime/'+ time.id + '/delete'}" method="post" class="form">
+                    <button type="submit" class="btn btn-danger">Löschen</button>
+                </form>
+            </td>
         </tr>
     </table>
-
-    <div>
+    <p th:if="${event.times.empty}">Es gibt derzeit keine Termine zu der Veranstaltung.</p>
+    <br>
+    <br>
+    <div th:if="${#httpServletRequest.remoteUser eq event.owner.username}">
         <h2>Neuer Termin</h2>
-        <form th:action="${'/events/' + event.id}" method="post" class="form-inline">
-            <input name="title" type="text" placeholder="Titel des Termins" class="form-control"/>
-            <input name="description" type="text" placeholder="Beschreibung" class="form-control"/>
-            <input name="maxParticipant" type="number" placeholder="Höchstteilnehmerzahl" class="form-control"/>
-            <input name="date" type="text" placeholder="Datum" class="form-control"/>
+        <form th:action="${'/events/' + event.id + '/eventTime'}" method="post" th:object="${eventTime}">
+            <div class="form-group">
+                <input name="title" type="text" placeholder="Titel des Termins" class="form-control"
+                       th:field="*{title}"/>
+                <label class="text-danger" th:errors="*{title}"/>
+            </div>
+            <div class="form-group">
+                <input name="description" type="text" placeholder="Beschreibung" class="form-control"
+                       th:field="*{description}"/>
+                <label class="text-danger" th:errors="*{description}"/>
+            </div>
+            <div class="form-group">
+                <input name="maxParticipants" type="number" placeholder="Höchstteilnehmerzahl" class="form-control"
+                       th:field="*{maxParticipants}"/>
+                <label class="text-danger" th:errors="*{maxParticipants}"/>
+            </div>
+            <div class="form-group">Datum
+                <input name="date" type="date" placeholder="Datum" class="form-control" th:field="*{date}"/>
+                <label class="text-danger" th:errors="*{date}"/>
+            </div>
+            <div class="form-group">Uhrzeit
+                <input name="time" type="time" placeholder="Uhrzeit" class="form-control" th:field="*{time}"/>
+                <label class="text-danger" th:errors="*{time}"/>
+            </div>
+            <div class="form-group">Dauer des Termins
+                <input name="duration" type="time" placeholder="Dauer des Termins" class="form-control" th:field="*{duration}"/>
+                <label class="text-danger" th:errors="*{duration}"/>
+            </div>
             <button type="submit" class="btn btn-primary">Eintragen</button>
         </form>
     </div>
 
-    <hr/>
-    <p class="small">
-        <a href="/events/">Index</a>
-    </p>
 </div>
 </body>
 </html>

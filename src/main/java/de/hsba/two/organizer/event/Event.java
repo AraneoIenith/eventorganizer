@@ -1,5 +1,8 @@
 package de.hsba.two.organizer.event;
 
+import de.hsba.two.organizer.user.User;
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,13 +13,24 @@ public class Event {
     @GeneratedValue
     private Long id;
 
+    @NotBlank(message = "Bitte geben Sie einen Namen ein")
+    @Basic(optional = false)
     private String name;
 
+    @NotBlank(message = "Bitte geben Sie eine Kategorie ein")
+    @Basic(optional = false)
     private String category;
 
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<EventTime> times;
 
+    @ManyToOne(optional = false)
+    private User owner;
+
+    @PrePersist
+    private void onPersist() {
+        this.owner = User.getCurrentUser();
+    }
 
     public Long getId() {
         return id;
@@ -43,5 +57,13 @@ public class Event {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 }

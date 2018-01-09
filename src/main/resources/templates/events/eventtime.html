@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<body>
+<div layout:fragment="content">
+    <div class="page-header">
+        <a class="btn btn-xs btn-link pull-right" th:href="${'/events/' + eventtime.event.id}">Zurück zur
+            Veranstaltung</a>
+        <h2 th:text="${eventtime.title + ' (' + eventtime.event.name + ')'}"></h2>
+        <h4 th:text="${'Am '+ eventtime.date + ' um ' + eventtime.time}"></h4>
+        <h4 th:text="${'Dauer: '+ eventtime.duration + ' Std.'}"></h4>
+        <h4 th:text="${'Höchstteilnehmerzahl: '+ eventtime.maxParticipants}"></h4>
+    </div>
+
+    <div class="row">
+        <div class="col-md-1">Beschreibung:</div>
+        <div class="col-md-6" th:text="${eventtime.description}"></div>
+        <div class="col-md-3 " th:if="${!eventtime.participants.empty}">Teilnehmer:
+            <ol>
+                <li th:each="participant : ${eventtime.participants}"><span th:text="${participant.firstname}"></span>
+                    (<span th:text="${participant.username}"></span>)
+                </li>
+            </ol>
+        </div>
+        <div class="col-md-2" >
+            <form th:action="${'/eventtime/' + eventtime.id + '/signup'}" method="post" class="form"
+                  th:if="${!#lists.contains(eventtime.participants, currentUser) and !participantsSize.equals(eventtime.maxParticipants) and !#httpServletRequest.remoteUser.equals(eventtime.event.owner.username)}">
+                <button type="submit" class="btn btn-neutral">Für diesen Termin anmelden</button>
+            </form>
+            <form th:action="${'/eventtime/' + eventtime.id + '/signout'}" method="post" class="form"
+                  th:if="${#lists.contains(eventtime.participants, currentUser)}">
+                <button type="submit" class="btn btn-warning">Für diesen Termin abmelden</button>
+            </form>
+        </div>
+    </div>
+
+
+</div>
+</body>
+</html>
