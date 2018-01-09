@@ -12,7 +12,6 @@
 <div layout:fragment="content">
     <h1>Hallo <span th:text="${user.firstname}"></span>!</h1>
     <br>
-    <br>
     <div th:if="${!UserEventTimes.empty}">
         <h3>Deine Termine:</h3>
         <table class="table">
@@ -41,8 +40,7 @@
         </table>
     </div>
     <br>
-    <br>
-    <h3>Hier kannst du deine Benutzerdaten sehen:</h3>
+    <h3>Deine Benutzerdaten:</h3>
     <table class="table">
         <tr>
             <th>Name</th>
@@ -57,7 +55,7 @@
     </table>
     <br>
     <br>
-    <h3>Möchtest du dein Passwort ändern?</h3>
+    <h3>Dein Passwort ändern:</h3>
     <br>
     <form th:action="${'/profile/' + user.username}" method="post" class="form-group">
 

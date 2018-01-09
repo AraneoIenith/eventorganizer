@@ -2,28 +2,25 @@ package de.hsba.two.organizer.web;
 
 import de.hsba.two.organizer.event.Event;
 import de.hsba.two.organizer.event.EventService;
-import de.hsba.two.organizer.event.EventTime;
 import de.hsba.two.organizer.user.UserService;
-import org.hibernate.validator.constraints.EAN;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.security.acl.Owner;
 import java.util.Collection;
-import java.util.List;
 
 @Controller
 @RequestMapping("/events")
 public class EventIndexController {
 
     private final EventService eventService;
+    private final UserService userService;
 
-    public EventIndexController(EventService eventService) {
+    public EventIndexController(EventService eventService, UserService userService) {
         this.eventService = eventService;
+        this.userService = userService;
     }
 
     @ModelAttribute("events")
@@ -35,6 +32,17 @@ public class EventIndexController {
     public String index(Model model) {
          model.addAttribute("event", new Event());
         return "events/index";
+    }
+
+    @RequestMapping(path="/loggedIn")
+    public String checkStatus() {
+        String currentUserName = userService.getUserName();
+        String status = userService.getStatus(currentUserName);
+
+        if (status.equals("true"))
+            return "redirect:/events";
+        else
+            return "redirect:/logout";
     }
 
     @PostMapping

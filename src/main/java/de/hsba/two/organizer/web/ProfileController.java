@@ -23,6 +23,8 @@ public class ProfileController {
         this.userService = userService;
     }
 
+    //Umleitung auf die Profilseite inklusive Prüfung, ob der User auf seine eigene Seite zugreifen will
+    //Übergabe des Users, der Events des Nutzers und der Termine, für die der Nutzer angemeldet ist
     @GetMapping(path = "/{username}")
     public String show(@PathVariable("username") String username, Model model) {
         User currentUserObj = userService.getUserObj();
@@ -38,6 +40,7 @@ public class ProfileController {
         }
     }
 
+    //Passwort ändern inklusive Prüfung, ob das alte Passwort korrekt ist, das neue nicht leer ist und mit dem wiederholten übereinstimmt
     @PostMapping(path = "/{username}")
         public String update(@PathVariable("username") String username, String passwordold, String passwordnew, String passwordnew2, Model model)
     {

@@ -14,7 +14,7 @@ public class IndexController {
 
     @RequestMapping
     public String index() {
-        return "redirect:/events/";
+            return "redirect:/events/loggedIn";
     }
 
     @RequestMapping("/login")

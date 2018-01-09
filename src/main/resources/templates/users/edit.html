@@ -39,7 +39,8 @@
             </div>
         </div>
         <div class="form-inline">
-            <input name="usernamenew" type="text" placeholder="Neue Personalnummer" class="form-control"/>
+            <input name="usernamenew" type="text" placeholder="Neue Personalnummer" class="form-control" required oninvalid="this.setCustomValidity('Bitte eine Personalnummer eingeben')"
+                   oninput="setCustomValidity('')"/>
             <button type="submit" class="btn btn-primary">Personalnummer ändern</button>
         </div>
     </form>
@@ -53,7 +54,8 @@
             </div>
         </div>
         <div class="form-inline">
-            <input name="firstnamenew" type="text" placeholder="Neuer Vorname" class="form-control"/>
+            <input name="firstnamenew" type="text" placeholder="Neuer Vorname" class="form-control" required oninvalid="this.setCustomValidity('Bitte einen Vornamen eingeben')"
+                   oninput="setCustomValidity('')"/>
             <button type="submit" class="btn btn-primary">Vorname ändern</button>
         </div>
     </form>
@@ -92,7 +94,7 @@
             </div>
         </div>
         <div class="form-inline">
-                <select name="rolenew">
+                <select name="rolenew" required>
                     <option value="" disabled selected hidden>auswählen</option>
                     <option value="HR">HR</option>
                     <option value="ORGANIZER">ORGANIZER</option>

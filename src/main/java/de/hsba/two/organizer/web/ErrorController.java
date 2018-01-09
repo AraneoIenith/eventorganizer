@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ControllerAdvice
 public class ErrorController {
 
+    //Umleitung auf die Fehlerseite errors/404.html
     @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public String notFound() {

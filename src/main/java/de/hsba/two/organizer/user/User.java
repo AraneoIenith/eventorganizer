@@ -20,7 +20,6 @@ public class User {
     @GeneratedValue
     private Long id;
 
-    @Basic(optional = false)
     private boolean active;
 
     @Column(unique = true)
