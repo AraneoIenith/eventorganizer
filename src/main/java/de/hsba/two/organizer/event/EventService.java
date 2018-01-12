@@ -90,4 +90,13 @@ public class EventService {
         timeRepository.delete(id);
     }
 
+   public void changeEventtimeTitle(Long id, String titlenew) {timeRepository.changeEventtimetitle(id, titlenew);}
+
+   public void changeEventtimeDescription(Long id, String descriptionnew) {timeRepository.changeEventtimeDescription(id, descriptionnew);}
+
+   public void changeEventtimeDate(Long id, String datenew) {timeRepository.changeEventtimeDate(id, datenew);}
+
+   public void changeEventtimeTime(Long id, String timenew) {timeRepository.changeEventtimeTime(id, timenew);}
+
+   public void changeEventtimeDuration(Long id, String durationnew) {timeRepository.changeEventtimeDuration(id, durationnew);}
 }

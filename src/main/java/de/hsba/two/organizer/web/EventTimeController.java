@@ -43,6 +43,53 @@ public class EventTimeController {
         }
     }
 
+    //Anzeige der Bearbeitungsseite eines Termins
+    @GetMapping(path = "/{id}/edit")
+    public String editEventtime(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("eventtime", eventService.findTime(id));
+        EventTime eventtime = eventService.findTime(id);
+        if (eventtime == null) {
+            throw new NotFoundException();
+        } else {
+            return "events/editeventtime";
+        }
+    }
+
+    @PostMapping(path = "/{id}/edit/title")
+    public String editEventtimeTitle(@PathVariable("id") Long id, String titlenew, Model model) {
+        model.addAttribute("eventtime", eventService.findTime(id));
+        eventService.changeEventtimeTitle(id, titlenew);
+        return "redirect:/eventtime/" + id + "/edit/" + "?titleaccepted";
+    }
+
+    @PostMapping(path = "/{id}/edit/description")
+    public String editEventtimeDescription(@PathVariable("id") Long id, String descriptionnew, Model model) {
+        model.addAttribute("eventtime", eventService.findTime(id));
+        eventService.changeEventtimeDescription(id, descriptionnew);
+        return "redirect:/eventtime/" + id + "/edit/" + "?descriptionaccepted";
+    }
+
+    @PostMapping(path = "/{id}/edit/date")
+    public String editEventtimeDate(@PathVariable("id") Long id, String datenew, Model model) {
+        model.addAttribute("eventtime", eventService.findTime(id));
+        eventService.changeEventtimeDate(id, datenew);
+        return "redirect:/eventtime/" + id + "/edit/" + "?dateaccepted";
+    }
+
+    @PostMapping(path = "/{id}/edit/time")
+    public String editEventtimeTime(@PathVariable("id") Long id, String timenew, Model model) {
+        model.addAttribute("eventtime", eventService.findTime(id));
+        eventService.changeEventtimeTime(id, timenew);
+        return "redirect:/eventtime/" + id + "/edit/" + "?timeaccepted";
+    }
+
+    @PostMapping(path = "/{id}/edit/duration")
+    public String editEventtimeDuration(@PathVariable("id") Long id, String durationnew, Model model) {
+        model.addAttribute("eventtime", eventService.findTime(id));
+        eventService.changeEventtimeDuration(id, durationnew);
+        return "redirect:/eventtime/" + id + "/edit/" + "?durationaccepted";
+    }
+
     //Anmeldung zu einem Termin
     @PostMapping(path = "/{id}/signup")
     public String signup(@PathVariable("id") Long id) {

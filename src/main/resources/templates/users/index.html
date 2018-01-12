@@ -30,6 +30,12 @@
                 <div class="form-group">
                     <input name="username" type="text" placeholder="Personalnummer" class="form-control" required oninvalid="this.setCustomValidity('Bitte eine Personalnummer eingeben')"
                            oninput="setCustomValidity('')"/>
+                    <div th:if="${param.userexist}" class="form-group">
+                        <div class="text-danger">
+                            <strong>Personalnummer ist schon vergeben
+                                <br> Bitte eine andere Personalnummer angeben</strong>
+                        </div>
+                    </div>
                 </div>
             </th>
             <th>
@@ -38,7 +44,7 @@
                 <input name="password2" type="password" placeholder="Passwort wiederholen" class="form-control" required oninvalid="this.setCustomValidity('Bitte das Passwort wiederholen')"
                        oninput="setCustomValidity('')"/>
                 <div th:if="${param.passnew}" class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10 text-danger">
+                    <div class="text-danger">
                         <strong>Das neue Passwort wurde nicht korrekt wiederholt</strong>
                     </div>
                 </div>
@@ -58,14 +64,8 @@
                 <p><button type="submit" class="btn btn-primary">Anlegen</button></p>
         </tr>
             <div th:if="${param.usercreated}" class="form-group">
-                <div class="col-sm-offset-2 col-sm-10 text-success">
+                <div class="text-success">
                     <strong th:text="${'Mitarbeiter wurde erfolgreich angelegt'}"></strong>
-                </div>
-            </div>
-            <div th:if="${param.userexist}" class="form-group">
-                <div class="col-sm-offset-2 col-sm-10 text-danger">
-                    <strong>Personalnummer ist schon vergeben
-                        <br> Bitte eine andere Personalnummer angeben</strong>
                 </div>
             </div>
         </form>
@@ -88,9 +88,9 @@
       <td th:text="${user.role}">
       </td>
       <td>
-          <p><a th:href="${'/users/edit/' + user.username}"><button type="submit" class="btn btn-primary">Bearbeiten</button></a></p>
+          <p><a th:href="${'/users/edit/' + user.username}" th:if="${!user.username.equals(#httpServletRequest.remoteUser)}"><button type="submit" class="btn btn-primary">Bearbeiten</button></a></p>
              <form th:action="${'/users/deactivate/' + user.username}" method="post" class="form"
-                    th:if="${user.active.equals(true)}">
+                    th:if="${user.active.equals(true)} and ${!user.username.equals(#httpServletRequest.remoteUser)}">
                   <button type="submit" class="btn btn-danger">Deaktivieren</button>
               </form>
               <form th:action="${'/users/activate/' + user.username}" method="post" class="form"

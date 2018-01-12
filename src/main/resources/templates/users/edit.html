@@ -28,18 +28,18 @@
     <p><strong>Personalnummer ändern</strong></p>
     <form th:action="${'/users/edit/username/' + user.username}" method="post" class="form-group">
         <div th:if="${param.userexist}" class="form-group">
-            <div class="col-sm-offset-2 col-sm-10 text-danger">
+            <div class="text-danger">
                 <strong>Personalnummer ist schon vergeben
                     <br> Bitte eine andere Personalnummer angeben</strong>
             </div>
         </div>
         <div th:if="${param.usernameaccepted}" class="form-group">
-            <div class="col-sm-offset-2 col-sm-10 text-success">
+            <div class="text-success">
                 <strong>Personalnummer wurde erfolgreich geändert</strong>
             </div>
         </div>
         <div class="form-inline">
-            <input name="usernamenew" type="text" placeholder="Neue Personalnummer" class="form-control" required oninvalid="this.setCustomValidity('Bitte eine Personalnummer eingeben')"
+            <input name="usernamenew" type="text" placeholder="Neue Personalnummer" class="form-control" required oninvalid="this.setCustomValidity('Bitte eine neue Personalnummer eingeben')"
                    oninput="setCustomValidity('')"/>
             <button type="submit" class="btn btn-primary">Personalnummer ändern</button>
         </div>
@@ -49,12 +49,12 @@
     <p><strong>Vorname ändern</strong></p>
     <form th:action="${'/users/edit/firstname/' + user.username}" method="post" class="form-group">
         <div th:if="${param.firstnameaccepted}" class="form-group">
-            <div class="col-sm-offset-2 col-sm-10 text-success">
+            <div class="text-success">
                 <strong>Der Vorname wurde erfolgreich geändert</strong>
             </div>
         </div>
         <div class="form-inline">
-            <input name="firstnamenew" type="text" placeholder="Neuer Vorname" class="form-control" required oninvalid="this.setCustomValidity('Bitte einen Vornamen eingeben')"
+            <input name="firstnamenew" type="text" placeholder="Neuer Vorname" class="form-control" required oninvalid="this.setCustomValidity('Bitte einen neuen Vornamen eingeben')"
                    oninput="setCustomValidity('')"/>
             <button type="submit" class="btn btn-primary">Vorname ändern</button>
         </div>
@@ -64,17 +64,17 @@
     <p><strong>Passwort ändern</strong></p>
     <form th:action="${'/users/edit/password/' + user.username}" method="post" class="form-group">
         <div th:if="${param.passnew}" class="form-group">
-            <div class="col-sm-offset-2 col-sm-10 text-danger">
+            <div class="text-danger">
                 <strong>Das neue Passwort wurde nicht korrekt wiederholt</strong>
             </div>
         </div>
         <div th:if="${param.passempty}" class="form-group">
-            <div class="col-sm-offset-2 text-danger">
+            <div class="text-danger">
                 <strong>Das Passwort darf nicht leer sein</strong>
             </div>
         </div>
         <div th:if="${param.passaccepted}" class="form-group">
-            <div class="col-sm-offset-2 col-sm-10 text-success">
+            <div class="text-success">
                 <strong>Das Passwort wurde erfolgreich geändert</strong>
             </div>
         </div>
@@ -89,7 +89,7 @@
     <p><strong>Rolle ändern</strong></p>
     <form th:action="${'/users/edit/role/' + user.username}" method="post" class="form-group">
         <div th:if="${param.roleaccepted}" class="form-group">
-            <div class="col-sm-offset-2 col-sm-10 text-success">
+            <div class="text-success">
                 <strong>Die Rolle wurde erfolgreich geändert</strong>
             </div>
         </div>

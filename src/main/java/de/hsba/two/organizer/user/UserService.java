@@ -29,6 +29,7 @@ public class UserService {
         createUser("33333", "Dora", "33333", "ORGANIZER", true);
     }
 
+    //Nutzer wird im Repository angelegt, Status wird initiativ auf aktiv gesetzt
     public User createUser(String username, String firstname, String password, String role, boolean active) {
         return userRepository.save(new User(username, firstname, passwordEncoder.encode(password), role, true));
     }
@@ -49,36 +50,46 @@ public class UserService {
         return userRepository.findByName(username);
     }
 
+    //Alle in der DB gespeicherten Nutzer
     public List<User> findAll() {
         return userRepository.findAll();
     }
 
+    //Neues Passwort wird über den Controller geholt und in die DB geschrieben
     public void changePassword(String username, String passwordnew) {
         userRepository.changePassword(username, passwordEncoder.encode(passwordnew));
     }
 
+    //Suche nach einem Passwort von einem Nutzer
     public String getPassword(String username) {
         return userRepository.findPassword(username);
     }
 
+    //Suche nach Stats eines Nutzers
     public String getStatus(String username) {return userRepository.findStatus(username);}
 
     public boolean EncPass(String passwordold, String password) {
         return passwordEncoder.matches(passwordold, password);
     }
 
+    //Änderung der Personalnummer: neue Personalnr. wird vom Controller übergeben und in die DB gespeichert
     public void changeUsername(String username, String usernamenew) {
         userRepository.changeUsername(username, usernamenew);
     }
 
+    //Änderung des Vornamens
     public void changefirstname (String username, String firstnamenew) {
         userRepository.changeFirstname(username, firstnamenew);
     }
 
+
+    //Änderung der Rolle
     public void changeRole (String username, String rolenew) {
         userRepository.changeRole(username, rolenew);
     }
 
+    //Überprüfung, ob die eingegebene Personalnummer schon vergeben ist, d.h. bereits in der DB existiert.
+    //Hierfür wird die neue Personalnr. in der DB gesucht. Falls diese nicht vergeben ist, ist der Rückgabewert null.
     public boolean matchUser(String usernamenew) {
         Object username = userRepository.findUsername(usernamenew);
 
@@ -87,10 +98,12 @@ public class UserService {
         else return true;
     }
 
+    //Änderung des Status auf inaktiv
     public void changeToDeactive (String username){
        userRepository.changeDeactivate(username);
     }
 
+    //Änderung des Status auf aktiv
     public void changeToActive (String username) {
         userRepository.changeActive(username);
     }

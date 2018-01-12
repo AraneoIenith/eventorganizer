@@ -23,12 +23,18 @@ public class UserController {
         model.addAttribute("users", userService.findAll());
         return "users/index";
     }
+
+    //Anzeige Bearbeitungsdetailseite eines Nutzers
     @GetMapping(path = "/edit/{username}")
     public String edit(@PathVariable("username") String username, Model model) {
         model.addAttribute("user", userService.getUser(username));
         return "users/edit";
     }
 
+    //Änderung des Passwortes eines Users.
+    //Validierungen: prüfen, ob das Feld leer ist und ob die eingegebenen Passwörter übereinstimmen. Falls es nicht der Fall ist, werden
+    //auf die in HTML eingestellten Fehlermeldungen verwiesen
+    //Wenn alles korrekt ist, wird im Service die entsprechende Methode zur Änderung des Passwortes aufgerufen und Erfolgsmeldung erscheint
     @PostMapping(path = "/edit/password/{username}")
     public String editpass(@PathVariable("username") String username, String passwordnew, String passwordnew2, Model model)
     {
@@ -45,6 +51,9 @@ public class UserController {
         }
     }
 
+    //Änderung der Personalnummer eines Users.
+    //Validierung: prüfen, ob die eingegebene Personalnummer bereits existiert (Personalnr. soll einzigartig sein)
+    //Wenn Personalnr. noch nicht vergeben ist, wird diese als Parameter an die entsprechende Methode an den Service übergeben; Erfolgsmeldung erscheint
     @PostMapping(path = "/edit/username/{username}")
     public String editusername(@PathVariable("username") String username, String usernamenew, Model model)
     {
@@ -59,12 +68,17 @@ public class UserController {
         }
     }
 
+    //Änderung des Vornames eines Users.
+    //Der richtige User wird anhand des mitgegebenen Parameters (die Personalnr. rausgesucht). An dem User wird der alte Vorname mit dem neuen Vornamen ersetzt.
     @PostMapping(path = "/edit/firstname/{username}")
     public String editfirstname(@PathVariable("username") String username, String firstnamenew, Model model) {
         model.addAttribute("user", userService.getUser(username));
         userService.changefirstname(username, firstnamenew);
             return "redirect:/users/edit/" + username + "?firstnameaccepted";
     }
+
+    //Änderung der Rolle.
+    //ALte Rolle wird mit der neu eingegebenen Rolle (rolenew) ersetzt.
     @PostMapping(path = "/edit/role/{username}")
     public String editrole(@PathVariable("username") String username, String rolenew, Model model)
     {   model.addAttribute("user", userService.getUser(username));
@@ -72,6 +86,10 @@ public class UserController {
         return "redirect:/users/edit/" + username + "?roleaccepted";
     }
 
+    //Anlegen eines neuen Users
+    //Validierung: in HTML sind bereits Validierungen definiert, die überprüfen, dass alle Pflichtfelder ausgefüllt sind
+    //Hier wird nur noch überprüft, ob die eingegebene Personalnummer bereits existiert und ob die eingegebenen Passwörter übereinstimmen.
+    //Wenn beide Prüfungen ohne Fehler durchlaufen sind, dann wird die Methode createUser im Service angesprochen und alle Eingaben als Parameter mitgegeben.
     @PostMapping(path = "/create")
     public String create(@Valid User user, String username,  String firstname, String password, String password2, String role){
 
@@ -87,11 +105,10 @@ public class UserController {
             user = userService.createUser(username, firstname, password, role, true);
             return "redirect:/users/" + "?usercreated";
         }
-
-
-
     }
 
+    //Änderung des Status auf inaktiv.
+    //Personalnummer wird als Parameter für die Methode changeToDeactive im Service mitgegeben. Verlinkt wird anschließend auf die Nutzerverwaltung.
     @PostMapping(path = "/deactivate/{username}")
         public String deactivate(@PathVariable("username") String username){
         userService.changeToDeactive(username);
@@ -99,6 +116,8 @@ public class UserController {
         return "redirect:/users/";
         }
 
+    //Änderung des Status auf aktiv.
+    //Personalnummer wird als Parameter für die Methode changeToDeactive im Service mitgegeben. Verlinkt wird anschließend auf die Nutzerverwaltung.
     @PostMapping(path = "/activate/{username}")
     public String activate(@PathVariable("username") String username){
         userService.changeToActive(username);
