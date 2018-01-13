@@ -43,6 +43,18 @@ public class EventShowController {
         }
     }
 
+    @PostMapping(path = "/edit/name")
+    public String editEventName(@PathVariable("id") Long id, String namenew) {
+        eventService.changeEventName(id, namenew);
+        return "redirect:/events/" + id + "?nameaccepted";
+    }
+
+    @PostMapping(path = "/edit/category")
+    public String editEventCategory(@PathVariable("id") Long id, String categorynew) {
+        eventService.changeEventCategory(id, categorynew);
+        return "redirect:/events/" + id + "?categoryaccepted";
+    }
+
     @PostMapping(path = "/eventTime")
     public String addTime(Model model, @PathVariable("id") Long id, @ModelAttribute("eventTime") @Valid EventTime time, BindingResult binding) {
         Event event = eventService.getEvent(id);

@@ -99,4 +99,8 @@ public class EventService {
    public void changeEventtimeTime(Long id, String timenew) {timeRepository.changeEventtimeTime(id, timenew);}
 
    public void changeEventtimeDuration(Long id, String durationnew) {timeRepository.changeEventtimeDuration(id, durationnew);}
+
+   public void changeEventName(Long id, String namenew) {repository.changeEventName(id, namenew);}
+
+   public void changeEventCategory(Long id, String categorynew) {repository.changeEventCategory(id, categorynew);}
 }
