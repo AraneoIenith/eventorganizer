@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @RequestMapping("/")
 public class IndexController {
 
+    //Nach dem Login wird auf /events/loggedIn weitergeleitet zur Überprüfung, ob User aktiv/inaktiv ist
     @RequestMapping
     public String index() {
             return "redirect:/events/loggedIn";

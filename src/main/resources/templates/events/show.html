@@ -2,15 +2,27 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
-<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script>$("#edit").click(function(){$("#clickme").slideToggle("slow", function(){});});</script>-->
+<head>
+    <style type="text/css">
+    .form-inline{display:none}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    $("#edit").click(function(){
+        $("#name").slideToggle();
+        $("#category").slideToggle();
+
+    });
+});
+</script>
+</head>
 <body>
 <div layout:fragment="content">
     <div class="page-header">
         <a class="btn btn-xs btn-link pull-right" href="/events/">Zu den Veranstaltungen</a>
         <h1 th:text="${'Veranstaltung: ' + event.name}"></h1>
         <h4 th:text="${'Kategorie: ' + event.category}"></h4>
-        <br>
         <div id="clickme">
         <form th:action="${'/events/' + event.id + '/edit/name'}" method="post" class="form">
             <div th:if="${param.nameaccepted}" class="form-group">
@@ -18,7 +30,7 @@
                     <strong>Name der Veranstaltung wurde erfolgreich geändert</strong>
                 </div>
             </div>
-            <div class="form-inline">
+            <div class="form-inline" id="name">
                 <input name="namenew" type="text" placeholder="Name der Veranstaltung" class="form-control" required oninvalid="this.setCustomValidity('Bitte einen neuen Namen eingeben')"
                        oninput="setCustomValidity('')"/>
                 <button type="submit" class="btn btn-primary">Name ändern</button>
@@ -32,30 +44,30 @@
                     <strong>Kategorie wurde erfolgreich geändert</strong>
                 </div>
             </div>
-            <div class="form-inline">
+            <div class="form-inline" id="category">
                 <input name="categorynew" type="text" placeholder="Kategorie" class="form-control" required oninvalid="this.setCustomValidity('Bitte eine neue Kategorie eingeben')"
                        oninput="setCustomValidity('')"/>
                 <button type="submit" class="btn btn-primary">Kategorie ändern</button>
+
             </div>
         </form>
             </p>
         </div>
-
         <br>
         <table class="table">
             <tr>
             <td>
-                <form th:if="${#httpServletRequest.remoteUser.equals(event.owner.username)}">
-                <button class="btn btn-primary" id="edit">Bearbeiten</button>
-                </form>
+                <button class="btn btn-primary" id="edit" th:if="${#httpServletRequest.remoteUser.equals(event.owner.username)}">Bearbeiten</button>
             </td>
             <td>
-            <form th:if="${#httpServletRequest.remoteUser.equals(event.owner.username)}"
-                  th:action="${'/events/' + event.id + '/delete'}"
-                  method="post" class="form">
+                <form th:if="${#httpServletRequest.remoteUser.equals(event.owner.username)}"
+                      th:action="${'/events/' + event.id + '/delete'}"
+                      method="post" class="form">
                 <button type="submit" class="btn btn-danger">Löschen</button>
-            </form>
+                </form>
             </td>
+                <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
             </tr>
     </table>
     </div>

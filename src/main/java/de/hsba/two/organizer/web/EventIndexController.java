@@ -34,6 +34,9 @@ public class EventIndexController {
         return "events/index";
     }
 
+    //nach dem Einloggen wird geprüft, ob der User aktiv oder inaktiv ist.
+    //Wenn der Nutzer inaktiv(status = false), dann wird er ausgeloggt. Falls er aktiv (status = true) ist, dann wird er auf
+    //die Startseite /events weitergeleitet
     @RequestMapping(path="/loggedIn")
     public String checkStatus() {
         String currentUserName = userService.getUserName();

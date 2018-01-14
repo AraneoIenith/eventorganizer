@@ -29,10 +29,11 @@ public class ProfileController {
     public String show(@PathVariable("username") String username, Model model) {
         User currentUserObj = userService.getUserObj();
         String currentUserName = userService.getUserName();
+        String currentStatus = userService.getStatus(username);
         model.addAttribute("user", currentUserObj);
         model.addAttribute("events",eventService.getEventsByOwner());
         model.addAttribute("UserEventTimes", eventService.getUserEventTimes());
-        if (!username.equals(currentUserName)) {
+        if (!username.equals(currentUserName) || currentStatus.equals("false")) {
             return "redirect:/accessDenied/";
         }
         else {

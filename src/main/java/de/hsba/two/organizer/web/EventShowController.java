@@ -43,12 +43,14 @@ public class EventShowController {
         }
     }
 
+    //Änderung des Namens der Veranstaltung mit Übergabe der id der Veranstaltung und des neuen Namens(namenew)
     @PostMapping(path = "/edit/name")
     public String editEventName(@PathVariable("id") Long id, String namenew) {
         eventService.changeEventName(id, namenew);
         return "redirect:/events/" + id + "?nameaccepted";
     }
 
+    //Änderung der Kategorie mit Übergabe der id der Veranstaltung und der neuen Kategorie(categorynew)
     @PostMapping(path = "/edit/category")
     public String editEventCategory(@PathVariable("id") Long id, String categorynew) {
         eventService.changeEventCategory(id, categorynew);

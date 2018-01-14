@@ -55,6 +55,8 @@ public class EventTimeController {
         }
     }
 
+    //Änderung des Titels eines Termins
+    //Übergabe der id des Termins (für Identifikation des Termins) und neuer Titel(titelnew)
     @PostMapping(path = "/{id}/edit/title")
     public String editEventtimeTitle(@PathVariable("id") Long id, String titlenew, Model model) {
         model.addAttribute("eventtime", eventService.findTime(id));
@@ -62,6 +64,8 @@ public class EventTimeController {
         return "redirect:/eventtime/" + id + "/edit/" + "?titleaccepted";
     }
 
+    //Änderung der Beschreibung eines Termins
+    //Übergabe der id des Termins (für Identifikation des Termins) und neuer Beschreibung(descriptionnew)
     @PostMapping(path = "/{id}/edit/description")
     public String editEventtimeDescription(@PathVariable("id") Long id, String descriptionnew, Model model) {
         model.addAttribute("eventtime", eventService.findTime(id));
@@ -69,6 +73,8 @@ public class EventTimeController {
         return "redirect:/eventtime/" + id + "/edit/" + "?descriptionaccepted";
     }
 
+    //Änderung des Datums eines Termins
+    //Übergabe der id des Termins (für Identifikation des Termins) und neues Datum(datenew)
     @PostMapping(path = "/{id}/edit/date")
     public String editEventtimeDate(@PathVariable("id") Long id, String datenew, Model model) {
         model.addAttribute("eventtime", eventService.findTime(id));
@@ -76,6 +82,8 @@ public class EventTimeController {
         return "redirect:/eventtime/" + id + "/edit/" + "?dateaccepted";
     }
 
+    //Änderung der Uhrzeit des Termins
+    //Übergabe der id des Termins (für Identifikation des Termins) und neue Uhrzeit(timenew)
     @PostMapping(path = "/{id}/edit/time")
     public String editEventtimeTime(@PathVariable("id") Long id, String timenew, Model model) {
         model.addAttribute("eventtime", eventService.findTime(id));
@@ -83,6 +91,8 @@ public class EventTimeController {
         return "redirect:/eventtime/" + id + "/edit/" + "?timeaccepted";
     }
 
+    //Änderung der Dauer eines Termins
+    //Übergabe der id des Termins (für Identifikation des Termins) und der neuen Dauer(durationnew)
     @PostMapping(path = "/{id}/edit/duration")
     public String editEventtimeDuration(@PathVariable("id") Long id, String durationnew, Model model) {
         model.addAttribute("eventtime", eventService.findTime(id));

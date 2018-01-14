@@ -90,17 +90,24 @@ public class EventService {
         timeRepository.delete(id);
     }
 
-   public void changeEventtimeTitle(Long id, String titlenew) {timeRepository.changeEventtimetitle(id, titlenew);}
+    //Aufruf zum Update der DB für Speicherung der Änderung
+    public void changeEventtimeTitle(Long id, String titlenew) {timeRepository.changeEventtimetitle(id, titlenew);}
 
-   public void changeEventtimeDescription(Long id, String descriptionnew) {timeRepository.changeEventtimeDescription(id, descriptionnew);}
+    //Aufruf zum Update der DB für Speicherung der Änderung
+    public void changeEventtimeDescription(Long id, String descriptionnew) {timeRepository.changeEventtimeDescription(id, descriptionnew);}
 
-   public void changeEventtimeDate(Long id, String datenew) {timeRepository.changeEventtimeDate(id, datenew);}
+    //Aufruf zum Update der DB für Speicherung der Änderung
+    public void changeEventtimeDate(Long id, String datenew) {timeRepository.changeEventtimeDate(id, datenew);}
 
-   public void changeEventtimeTime(Long id, String timenew) {timeRepository.changeEventtimeTime(id, timenew);}
+    //Aufruf zum Update der DB für Speicherung der Änderung
+    public void changeEventtimeTime(Long id, String timenew) {timeRepository.changeEventtimeTime(id, timenew);}
 
-   public void changeEventtimeDuration(Long id, String durationnew) {timeRepository.changeEventtimeDuration(id, durationnew);}
+    //Aufruf zum Update der DB für Speicherung der Änderung
+    public void changeEventtimeDuration(Long id, String durationnew) {timeRepository.changeEventtimeDuration(id, durationnew);}
 
-   public void changeEventName(Long id, String namenew) {repository.changeEventName(id, namenew);}
+    //Aufruf zum Update der DB für Speicherung der Änderung
+    public void changeEventName(Long id, String namenew) {repository.changeEventName(id, namenew);}
 
-   public void changeEventCategory(Long id, String categorynew) {repository.changeEventCategory(id, categorynew);}
+    //Aufruf zum Update der DB für Speicherung der Änderung
+    public void changeEventCategory(Long id, String categorynew) {repository.changeEventCategory(id, categorynew);}
 }
