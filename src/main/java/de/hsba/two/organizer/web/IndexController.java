@@ -22,7 +22,7 @@ public class IndexController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return auth instanceof AnonymousAuthenticationToken ? "login" : "redirect:/";
         //auf den SecurityContext zugreifen, um zu verstehen, ob der User angemeldet ist oder nicht. Angemeldete
-        //User sollen nicht auf index.html zugreifen können
+        //User sollen nicht auf login.html zugreifen können
     }
 
     @RequestMapping("/accessDenied")

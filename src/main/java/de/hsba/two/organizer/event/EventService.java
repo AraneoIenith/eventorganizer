@@ -27,6 +27,7 @@ public class EventService {
         return repository.findAll();
     }
 
+    //Collection mit Veranstaltungen, die dem angemeldeten User gehören
     public Collection<Event> getEventsByOwner() {
         User currentuser = userService.getUserObj();
         return repository.findByOwner(currentuser);
@@ -39,8 +40,9 @@ public class EventService {
     }
 
     public Event createEvent(Event event) {
-        return repository.save(event); // save one entity
+        return repository.save(event);
     }
+
 
     public Integer getParticipantsSize(Long id) {
         EventTime eventTime = findTime(id);
@@ -50,7 +52,7 @@ public class EventService {
     public void signUp(EventTime eventTime) {
         User currentuserobj = userService.getUserObj();
         List<User> currentParticipants = eventTime.getParticipants();
-        if (!currentParticipants.contains(currentuserobj)){
+        if (!currentParticipants.contains(currentuserobj)) {
             currentParticipants.add(currentuserobj);
         }
     }
@@ -61,13 +63,6 @@ public class EventService {
         currentParticipants.remove(currentuserobj);
     }
 
-    /*@PostConstruct
-    public void init() {
-        Event event = new Event();
-        event.setName("Haspa Selbsverteidigung");
-        event.setCategory("Kampf");
-        createEvent(event, "11111");
-    }*/
 
     public Event getEvent(Long id) {
         return repository.findOne(id);
@@ -82,6 +77,7 @@ public class EventService {
         return timeRepository.findOne(id);
     }
 
+    //Veranstaltung löschen
     public void delete(Long id) {
         repository.delete(id);
     }
@@ -90,17 +86,31 @@ public class EventService {
         timeRepository.delete(id);
     }
 
-   public void changeEventtimeTitle(Long id, String titlenew) {timeRepository.changeEventtimetitle(id, titlenew);}
+    public void changeEventtimeTitle(Long id, String titlenew) {
+        timeRepository.changeEventtimetitle(id, titlenew);
+    }
 
-   public void changeEventtimeDescription(Long id, String descriptionnew) {timeRepository.changeEventtimeDescription(id, descriptionnew);}
+    public void changeEventtimeDescription(Long id, String descriptionnew) {
+        timeRepository.changeEventtimeDescription(id, descriptionnew);
+    }
 
-   public void changeEventtimeDate(Long id, String datenew) {timeRepository.changeEventtimeDate(id, datenew);}
+    public void changeEventtimeDate(Long id, String datenew) {
+        timeRepository.changeEventtimeDate(id, datenew);
+    }
 
-   public void changeEventtimeTime(Long id, String timenew) {timeRepository.changeEventtimeTime(id, timenew);}
+    public void changeEventtimeTime(Long id, String timenew) {
+        timeRepository.changeEventtimeTime(id, timenew);
+    }
 
-   public void changeEventtimeDuration(Long id, String durationnew) {timeRepository.changeEventtimeDuration(id, durationnew);}
+    public void changeEventtimeDuration(Long id, String durationnew) {
+        timeRepository.changeEventtimeDuration(id, durationnew);
+    }
 
-   public void changeEventName(Long id, String namenew) {repository.changeEventName(id, namenew);}
+    public void changeEventName(Long id, String namenew) {
+        repository.changeEventName(id, namenew);
+    }
 
-   public void changeEventCategory(Long id, String categorynew) {repository.changeEventCategory(id, categorynew);}
+    public void changeEventCategory(Long id, String categorynew) {
+        repository.changeEventCategory(id, categorynew);
+    }
 }

@@ -43,51 +43,39 @@ public class EventTimeController {
         }
     }
 
-    //Anzeige der Bearbeitungsseite eines Termins
-    @GetMapping(path = "/{id}/edit")
-    public String editEventtime(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("eventtime", eventService.findTime(id));
-        EventTime eventtime = eventService.findTime(id);
-        if (eventtime == null) {
-            throw new NotFoundException();
-        } else {
-            return "events/editeventtime";
-        }
-    }
-
     @PostMapping(path = "/{id}/edit/title")
     public String editEventtimeTitle(@PathVariable("id") Long id, String titlenew, Model model) {
         model.addAttribute("eventtime", eventService.findTime(id));
         eventService.changeEventtimeTitle(id, titlenew);
-        return "redirect:/eventtime/" + id + "/edit/" + "?titleaccepted";
+        return "redirect:/eventtime/" + id  + "/?titleaccepted";
     }
 
     @PostMapping(path = "/{id}/edit/description")
     public String editEventtimeDescription(@PathVariable("id") Long id, String descriptionnew, Model model) {
         model.addAttribute("eventtime", eventService.findTime(id));
         eventService.changeEventtimeDescription(id, descriptionnew);
-        return "redirect:/eventtime/" + id + "/edit/" + "?descriptionaccepted";
+        return "redirect:/eventtime/" + id + "/?descriptionaccepted";
     }
 
     @PostMapping(path = "/{id}/edit/date")
     public String editEventtimeDate(@PathVariable("id") Long id, String datenew, Model model) {
         model.addAttribute("eventtime", eventService.findTime(id));
         eventService.changeEventtimeDate(id, datenew);
-        return "redirect:/eventtime/" + id + "/edit/" + "?dateaccepted";
+        return "redirect:/eventtime/" + id + "/?dateaccepted";
     }
 
     @PostMapping(path = "/{id}/edit/time")
     public String editEventtimeTime(@PathVariable("id") Long id, String timenew, Model model) {
         model.addAttribute("eventtime", eventService.findTime(id));
         eventService.changeEventtimeTime(id, timenew);
-        return "redirect:/eventtime/" + id + "/edit/" + "?timeaccepted";
+        return "redirect:/eventtime/" + id + "/?timeaccepted";
     }
 
     @PostMapping(path = "/{id}/edit/duration")
     public String editEventtimeDuration(@PathVariable("id") Long id, String durationnew, Model model) {
         model.addAttribute("eventtime", eventService.findTime(id));
         eventService.changeEventtimeDuration(id, durationnew);
-        return "redirect:/eventtime/" + id + "/edit/" + "?durationaccepted";
+        return "redirect:/eventtime/" + id + "/?durationaccepted";
     }
 
     //Anmeldung zu einem Termin
@@ -112,22 +100,4 @@ public class EventTimeController {
         eventService.deleteTime(id);
         return "redirect:/events/" + eventId;
     }
-
-
-
-//Falls die Seite auch gleichzeitig zum Bearbeiten dienen soll.
-//Damit man gleich zwei ModelAttribute hat (eventtime und formEvent)
-   /* @ModelAttribute("eventtime")
-    public EventTime getEventTime(@PathVariable("id") Long id) {
-        EventTime time = eventService.findTime(id);
-        return time;
-    }*/
-
-    /*@GetMapping
-    public String show(Model model, @PathVariable("id") Long id) {
-        model.addAttribute("formEvent", getEventTime(id));
-        return "events/eventtime";
-    }*/
-
-
 }

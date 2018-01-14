@@ -23,17 +23,21 @@ public class EventIndexController {
         this.userService = userService;
     }
 
+    //Collection aller Events soll zur Verfügung stehen
     @ModelAttribute("events")
     public Collection<Event> getEvents(){
         return eventService.getAll();
     }
 
+    //Gibt die Index Seite zurück
+    //Fügt ein "event" Objekt dem View Model hinzu, weil dieses im index.html beim Anlegen eines neuen Events erwartet wird
     @GetMapping
     public String index(Model model) {
          model.addAttribute("event", new Event());
         return "events/index";
     }
 
+    //Vorab Prüfung ob User aktiv oder inaktiv
     @RequestMapping(path="/loggedIn")
     public String checkStatus() {
         String currentUserName = userService.getUserName();
@@ -45,6 +49,7 @@ public class EventIndexController {
             return "redirect:/logout";
     }
 
+    //Anlegen eines neuen Events
     @PostMapping
     public String create(Model model, @ModelAttribute("event") @Valid Event event, BindingResult binding){
         if (binding.hasErrors()){
