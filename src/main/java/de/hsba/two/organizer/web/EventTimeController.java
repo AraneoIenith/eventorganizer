@@ -28,7 +28,7 @@ public class EventTimeController {
 
     //Größe der Teilnehmerliste zum Abgleich mit der maximalen Zahl an Teilnehmern
     @ModelAttribute("participantsSize")
-    public Integer getPasrticipantsSize(@PathVariable("id") Long id){
+    public Integer getParticipantsSize(@PathVariable("id") Long id){
         return eventService.getParticipantsSize(id);
     }
 

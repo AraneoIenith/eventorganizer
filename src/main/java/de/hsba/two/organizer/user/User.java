@@ -23,16 +23,12 @@ public class User {
     private boolean active;
 
     @Column(unique = true)
-    @Basic(optional = false)
     private String username;
 
-    @Basic(optional = false)
     private String firstname;
 
-    @Basic(optional = false)
     private String password;
 
-    @Basic(optional = false)
     private String role;
 
     public User(){}
