@@ -7,7 +7,9 @@
 <body>
 <div layout:fragment="content">
     <div class="page-header">
-        <a class="btn btn-xs btn-link pull-right" href="/events/">Zu den Veranstaltungen</a>
+        <a th:href="${'/profile/' + #httpServletRequest.remoteUser}" class="btn btn-xs btn-link pull-right">Mein
+            Profil</a>
+        <a class="btn btn-xs btn-link pull-right" href="/events/">Startseite</a>
         <h1 th:text="${'Veranstaltung: ' + event.name}"></h1>
         <h4 th:text="${'Kategorie: ' + event.category}"></h4>
         <br>
@@ -46,11 +48,6 @@
         <br>
         <table class="table">
             <tr>
-                <td>
-                    <form th:if="${#httpServletRequest.remoteUser.equals(event.owner.username)}">
-                        <button class="btn btn-primary" id="edit">Bearbeiten</button>
-                    </form>
-                </td>
                 <td>
                     <form th:if="${#httpServletRequest.remoteUser.equals(event.owner.username)}"
                           th:action="${'/events/' + event.id + '/delete'}"

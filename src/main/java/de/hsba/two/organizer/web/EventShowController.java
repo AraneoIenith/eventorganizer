@@ -62,7 +62,7 @@ public class EventShowController {
     public String addTime(Model model, @PathVariable("id") Long id, @ModelAttribute("eventTime") @Valid EventTime time, BindingResult binding) {
         Event event = eventService.getEvent(id);
         if (binding.hasErrors()) {
-            return "events/show" ;
+            return "events/show";
         }
         eventService.addEventTime(event, time);
         return "redirect:/events/" + event.getId();

@@ -28,7 +28,7 @@ public class EventTimeController {
 
     //Größe der Teilnehmerliste zum Abgleich mit der maximalen Zahl an Teilnehmern
     @ModelAttribute("participantsSize")
-    public Integer getParticipantsSize(@PathVariable("id") Long id){
+    public Integer getParticipantsSize(@PathVariable("id") Long id) {
         return eventService.getParticipantsSize(id);
     }
 
@@ -47,7 +47,7 @@ public class EventTimeController {
     public String editEventtimeTitle(@PathVariable("id") Long id, String titlenew, Model model) {
         model.addAttribute("eventtime", eventService.findTime(id));
         eventService.changeEventtimeTitle(id, titlenew);
-        return "redirect:/eventtime/" + id  + "/?titleaccepted";
+        return "redirect:/eventtime/" + id + "/?titleaccepted";
     }
 
     @PostMapping(path = "/{id}/edit/description")
@@ -95,7 +95,7 @@ public class EventTimeController {
     }
 
     @PostMapping(path = "/{id}/delete")
-    public String delete(@PathVariable("id") Long id){
+    public String delete(@PathVariable("id") Long id) {
         Long eventId = eventService.findTime(id).getEvent().getId();
         eventService.deleteTime(id);
         return "redirect:/events/" + eventId;

@@ -30,7 +30,7 @@ public class EventTime {
 
     @NotBlank(message = "Bitte geben Sie eine Beschreibung ein")
     @Basic(optional = false)
-    @Column(columnDefinition="TEXT")
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     @NotBlank(message = "Bitte wählen Sie ein Datum aus")
