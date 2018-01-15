@@ -1,41 +1,27 @@
 package de.hsba.two.organizer.user;
 
-import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 @Entity
 public class User {
 
-    public static User getCurrentUser() {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal instanceof UserAdapter) {
-            return ((UserAdapter) principal).getUser();
-        }
-        return null;
-    }
-
     @Id
     @GeneratedValue
     private Long id;
-
     private boolean active;
-
     @Column(unique = true)
-    @Basic(optional = false)
     private String username;
-
-    @Basic(optional = false)
     private String firstname;
-
-    @Basic(optional = false)
     private String password;
-
-    @Basic(optional = false)
     private String role;
 
-    public User(){}
+    public User() {
+    }
 
     public User(String username) {
         this.username = username;
@@ -49,7 +35,17 @@ public class User {
         this.active = true;
     }
 
-    public Long getId() { return id; }
+    public static User getCurrentUser() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserAdapter) {
+            return ((UserAdapter) principal).getUser();
+        }
+        return null;
+    }
+
+    public Long getId() {
+        return id;
+    }
 
     public String getPassword() {
         return password;
@@ -83,8 +79,12 @@ public class User {
         this.firstname = firstname;
     }
 
-    public void setActive(boolean active) { this.active = true;}
+    public void setActive(boolean active) {
+        this.active = true;
+    }
 
     //Getter bei Boolean ist immer mit is+Attributnamen zu definieren
-    public Boolean isActive() {return this.active;}
+    public Boolean isActive() {
+        return this.active;
+    }
 }

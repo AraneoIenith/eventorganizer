@@ -5,64 +5,70 @@
 <body>
 <div layout:fragment="content">
 
-  <div class="page-header">
-    <a class="btn btn-xs btn-link pull-right" href="/events/">Zum Veranstaltungskalender</a>
-    <h1>Nutzerverwaltung</h1>
-  </div>
+    <div class="page-header">
+        <a class="btn btn-xs btn-link pull-right" href="/events/">Zum Veranstaltungskalender</a>
+        <h1>Nutzerverwaltung</h1>
+    </div>
 
     <h4>Neuen Mitarbeiter anlegen</h4>
     <table class="table table-striped">
         <form th:action="${'/users/create'}" method="post" class="form-inline">
-        <tr>
-            <th>Vorname</th>
-            <th>Personalnummer</th>
-            <th>Passwort</th>
-            <th>Rolle</th>
-        </tr>
-        <tr>
-            <th>
-                <div class="form-group">
-                    <input name="firstname" type="text" placeholder="Vorname" class="form-control" required oninvalid="this.setCustomValidity('Bitte einen Vornamen eingeben')"
-                           oninput="setCustomValidity('')"/>
-                </div>
-            </th>
-            <th>
-                <div class="form-group">
-                    <input name="username" type="text" placeholder="Personalnummer" class="form-control" required oninvalid="this.setCustomValidity('Bitte eine Personalnummer eingeben')"
-                           oninput="setCustomValidity('')"/>
-                    <div th:if="${param.userexist}" class="form-group">
-                        <div class="text-danger">
-                            <strong>Personalnummer ist schon vergeben
-                                <br> Bitte eine andere Personalnummer angeben</strong>
+            <tr>
+                <th>Vorname</th>
+                <th>Personalnummer</th>
+                <th>Passwort</th>
+                <th>Rolle</th>
+            </tr>
+            <tr>
+                <th>
+                    <div class="form-group">
+                        <input name="firstname" type="text" placeholder="Vorname" class="form-control" required
+                               oninvalid="this.setCustomValidity('Bitte einen Vornamen eingeben')"
+                               oninput="setCustomValidity('')"/>
+                    </div>
+                </th>
+                <th>
+                    <div class="form-group">
+                        <input name="username" type="text" placeholder="Personalnummer" class="form-control" required
+                               oninvalid="this.setCustomValidity('Bitte eine Personalnummer eingeben')"
+                               oninput="setCustomValidity('')"/>
+                        <div th:if="${param.userexist}" class="form-group">
+                            <div class="text-danger">
+                                <strong>Personalnummer ist schon vergeben
+                                    <br> Bitte eine andere Personalnummer angeben</strong>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </th>
-            <th>
-                <p><input name="password" type="password" placeholder="Passwort" class="form-control" required oninvalid="this.setCustomValidity('Bitte Passwort eingeben')"
-                          oninput="setCustomValidity('')"/></p>
-                <input name="password2" type="password" placeholder="Passwort wiederholen" class="form-control" required oninvalid="this.setCustomValidity('Bitte das Passwort wiederholen')"
-                       oninput="setCustomValidity('')"/>
-                <div th:if="${param.passnew}" class="form-group">
-                    <div class="text-danger">
-                        <strong>Das neue Passwort wurde nicht korrekt wiederholt</strong>
+                </th>
+                <th>
+                    <p><input name="password" type="password" placeholder="Passwort" class="form-control" required
+                              oninvalid="this.setCustomValidity('Bitte Passwort eingeben')"
+                              oninput="setCustomValidity('')"/></p>
+                    <input name="password2" type="password" placeholder="Passwort wiederholen" class="form-control"
+                           required oninvalid="this.setCustomValidity('Bitte das Passwort wiederholen')"
+                           oninput="setCustomValidity('')"/>
+                    <div th:if="${param.passnew}" class="form-group">
+                        <div class="text-danger">
+                            <strong>Das neue Passwort wurde nicht korrekt wiederholt</strong>
+                        </div>
                     </div>
-                </div>
-            </th>
-            <th>
-                <div class="form-group">
-                    <select name="role" required>
-                        <option value="" disabled selected hidden>auswählen</option>
-                        <option value="HR">HR</option>
-                        <option value="ORGANIZER">ORGANIZER</option>
-                        <option value="USER">USER</option>
-                    </select>
-                </div>
-            </th>
-        </tr>
-        <tr>
-                <p><button type="submit" class="btn btn-primary">Anlegen</button></p>
-        </tr>
+                </th>
+                <th>
+                    <div class="form-group">
+                        <select name="role" required>
+                            <option value="" disabled selected hidden>auswählen</option>
+                            <option value="HR">HR</option>
+                            <option value="ORGANIZER">ORGANIZER</option>
+                            <option value="USER">USER</option>
+                        </select>
+                    </div>
+                </th>
+            </tr>
+            <tr>
+                <p>
+                    <button type="submit" class="btn btn-primary">Anlegen</button>
+                </p>
+            </tr>
             <div th:if="${param.usercreated}" class="form-group">
                 <div class="text-success">
                     <strong th:text="${'Mitarbeiter wurde erfolgreich angelegt'}"></strong>
@@ -72,34 +78,37 @@
     </table>
 
 
-  <h4>Übersicht aller Nutzer</h4>
-  <table class="table table-hover">
-    <tr>
-      <th>Personalnummer</th>
-      <th>Vorname</th>
-      <th>Rolle</th>
-      <th>Aktion</th>
-    </tr>
-    <tr th:each="user : ${users}">
-      <td th:text="${user.username}">
-      </td>
-      <td th:text="${user.firstname}">
-      </td>
-      <td th:text="${user.role}">
-      </td>
-      <td>
-          <p><a th:href="${'/users/edit/' + user.username}" th:if="${!user.username.equals(#httpServletRequest.remoteUser)}"><button type="submit" class="btn btn-primary">Bearbeiten</button></a></p>
-             <form th:action="${'/users/deactivate/' + user.username}" method="post" class="form"
-                    th:if="${user.active.equals(true)} and ${!user.username.equals(#httpServletRequest.remoteUser)}">
-                  <button type="submit" class="btn btn-danger">Deaktivieren</button>
-              </form>
-              <form th:action="${'/users/activate/' + user.username}" method="post" class="form"
-                    th:if="${user.active.equals(false)}">
-                  <button type="submit" class="btn btn-warning">Aktivieren</button>
-              </form>
-      </td>
-    </tr>
-  </table>
+    <h4>Übersicht aller Nutzer</h4>
+    <table class="table table-hover">
+        <tr>
+            <th>Personalnummer</th>
+            <th>Vorname</th>
+            <th>Rolle</th>
+            <th>Aktion</th>
+        </tr>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.username}">
+            </td>
+            <td th:text="${user.firstname}">
+            </td>
+            <td th:text="${user.role}">
+            </td>
+            <td>
+                <p><a th:href="${'/users/edit/' + user.username}"
+                      th:if="${!user.username.equals(#httpServletRequest.remoteUser)}">
+                    <button type="submit" class="btn btn-primary">Bearbeiten</button>
+                </a></p>
+                <form th:action="${'/users/deactivate/' + user.username}" method="post" class="form"
+                      th:if="${user.active.equals(true)} and ${!user.username.equals(#httpServletRequest.remoteUser)}">
+                    <button type="submit" class="btn btn-danger">Deaktivieren</button>
+                </form>
+                <form th:action="${'/users/activate/' + user.username}" method="post" class="form"
+                      th:if="${user.active.equals(false)}">
+                    <button type="submit" class="btn btn-warning">Aktivieren</button>
+                </form>
+            </td>
+        </tr>
+    </table>
 </div>
 </body>
 </html>

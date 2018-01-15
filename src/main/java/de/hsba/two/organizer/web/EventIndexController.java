@@ -6,7 +6,10 @@ import de.hsba.two.organizer.user.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 import java.util.Collection;
@@ -23,17 +26,21 @@ public class EventIndexController {
         this.userService = userService;
     }
 
+    //Collection aller Events soll zur Verfügung stehen
     @ModelAttribute("events")
-    public Collection<Event> getEvents(){
+    public Collection<Event> getEvents() {
         return eventService.getAll();
     }
 
+    //Gibt die Index Seite zurück
+    //Fügt ein "event" Objekt dem View Model hinzu, weil dieses im index.html beim Anlegen eines neuen Events erwartet wird
     @GetMapping
     public String index(Model model) {
-         model.addAttribute("event", new Event());
+        model.addAttribute("event", new Event());
         return "events/index";
     }
 
+    //Vorab Prüfung ob User aktiv oder inaktiv
     //nach dem Einloggen wird geprüft, ob der User aktiv oder inaktiv ist.
     //Wenn der Nutzer inaktiv(status = false), dann wird er ausgeloggt. Falls er aktiv (status = true) ist, dann wird er auf
     //die Startseite /events weitergeleitet
@@ -48,16 +55,15 @@ public class EventIndexController {
             return "redirect:/logout";
     }
 
+    //Anlegen eines neuen Events
     @PostMapping
-    public String create(Model model, @ModelAttribute("event") @Valid Event event, BindingResult binding){
-        if (binding.hasErrors()){
+    public String create(Model model, @ModelAttribute("event") @Valid Event event, BindingResult binding) {
+        if (binding.hasErrors()) {
             return "events/index";
         }
         event = eventService.createEvent(event);
         return "redirect:/events/" + event.getId();
     }
-
-
 
 
 }

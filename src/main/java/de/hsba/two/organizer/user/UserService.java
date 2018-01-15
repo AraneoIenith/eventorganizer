@@ -6,8 +6,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
-import javax.validation.constraints.Null;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -29,9 +27,15 @@ public class UserService {
         createUser("33333", "Dora", "33333", "ORGANIZER", true);
     }
 
-    //Nutzer wird im Repository angelegt, Status wird initiativ auf aktiv gesetzt
-    public User createUser(String username, String firstname, String password, String role, boolean active) {
-        return userRepository.save(new User(username, firstname, passwordEncoder.encode(password), role, true));
+    //Speichert einen User
+    //Rückgabe eines Strings für einen URL Parameter je nachdem, ob der Nutzer bereits existiert oder nicht
+    public String createUser(String username, String firstname, String password, String role, boolean active) {
+        if (!matchUser(username)) {
+            userRepository.save(new User(username, firstname, passwordEncoder.encode(password), role, true));
+            return "usercreated";
+        } else {
+            return "userexist";
+        }
     }
 
     //Das User Objekt des aktuellen Nutzers
@@ -45,7 +49,7 @@ public class UserService {
         return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 
-    //Username eines beliebigen Users
+    //Das User Objekt eines beliebigen Users
     public User getUser(String username) {
         return userRepository.findByName(username);
     }
@@ -66,7 +70,9 @@ public class UserService {
     }
 
     //Suche nach Stats eines Nutzers
-    public String getStatus(String username) {return userRepository.findStatus(username);}
+    public String getStatus(String username) {
+        return userRepository.findStatus(username);
+    }
 
     public boolean EncPass(String passwordold, String password) {
         return passwordEncoder.matches(passwordold, password);
@@ -78,13 +84,13 @@ public class UserService {
     }
 
     //Änderung des Vornamens
-    public void changefirstname (String username, String firstnamenew) {
+    public void changefirstname(String username, String firstnamenew) {
         userRepository.changeFirstname(username, firstnamenew);
     }
 
 
     //Änderung der Rolle
-    public void changeRole (String username, String rolenew) {
+    public void changeRole(String username, String rolenew) {
         userRepository.changeRole(username, rolenew);
     }
 
@@ -99,12 +105,12 @@ public class UserService {
     }
 
     //Änderung des Status auf inaktiv
-    public void changeToDeactive (String username){
-       userRepository.changeDeactivate(username);
+    public void changeToDeactive(String username) {
+        userRepository.changeDeactivate(username);
     }
 
     //Änderung des Status auf aktiv
-    public void changeToActive (String username) {
+    public void changeToActive(String username) {
         userRepository.changeActive(username);
     }
 

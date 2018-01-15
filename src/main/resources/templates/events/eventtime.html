@@ -5,6 +5,9 @@
 <body>
 <div layout:fragment="content">
     <div class="page-header">
+        <a th:href="${'/profile/' + #httpServletRequest.remoteUser}" class="btn btn-xs btn-link pull-right">Mein
+            Profil</a>
+        <a class="btn btn-xs btn-link pull-right" href="/events/">Startseite</a>
         <a class="btn btn-xs btn-link pull-right" th:href="${'/events/' + eventtime.event.id}">Zurück zur
             Veranstaltung</a>
         <h2 th:text="${eventtime.title + ' (' + eventtime.event.name + ')'}"></h2>
@@ -23,7 +26,7 @@
                 </li>
             </ol>
         </div>
-        <div class="col-md-2" >
+        <div class="col-md-2">
             <form th:action="${'/eventtime/' + eventtime.id + '/signup'}" method="post" class="form"
                   th:if="${!#lists.contains(eventtime.participants, currentUser) and !participantsSize.equals(eventtime.maxParticipants) and !#httpServletRequest.remoteUser.equals(eventtime.event.owner.username)}">
                 <button type="submit" class="btn btn-neutral">Für diesen Termin anmelden</button>
@@ -31,6 +34,107 @@
             <form th:action="${'/eventtime/' + eventtime.id + '/signout'}" method="post" class="form"
                   th:if="${#lists.contains(eventtime.participants, currentUser)}">
                 <button type="submit" class="btn btn-warning">Für diesen Termin abmelden</button>
+            </form>
+        </div>
+    </div>
+
+    <div th:if="${#httpServletRequest.remoteUser.equals(eventtime.event.owner.username)}">
+        <br>
+        <br>
+        <h3>Termin bearbeiten:</h3>
+
+        <div class="row">
+            <form th:action="${'/eventtime/' + id + '/edit/title'}" method="post" class="form-group">
+                <div th:if="${param.titleaccepted}" class="form-group">
+                    <div class="text-success">
+                        <strong>Titel wurde erfolgreich geändert</strong>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <input name="titlenew" type="text" placeholder="Titel des Termins" class="form-control" required
+                           oninvalid="this.setCustomValidity('Bitte einen neuen Titel eingeben')"
+                           oninput="setCustomValidity('')"/>
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-primary">Titel ändern</button>
+                </div>
+            </form>
+        </div>
+
+        <br>
+        <div class="row">
+            <form th:action="${'/eventtime/' + id + '/edit/description'}" method="post" class="form-group">
+                <div th:if="${param.descriptionaccepted}" class="form-group">
+                    <div class="text-success">
+                        <strong>Beschreibung wurde erfolgreich geändert</strong>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <input name="descriptionnew" type="text" placeholder="Beschreibung" class="form-control" required
+                           oninvalid="this.setCustomValidity('Bitte eine neue Beschreibung eingeben')"
+                           oninput="setCustomValidity('')"/>
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-primary">Beschreibung ändern</button>
+                </div>
+            </form>
+        </div>
+
+        <br>
+        <div class="row">
+            <form th:action="${'/eventtime/' + id + '/edit/date'}" method="post" class="form-group">
+                <div th:if="${param.dateaccepted}" class="form-group">
+                    <div class="text-success">
+                        <strong>Datum wurde erfolgreich geändert</strong>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <input name="datenew" type="date" placeholder="Datum" class="form-control" required
+                           oninvalid="this.setCustomValidity('Bitte ein neues Datum eingeben')"
+                           oninput="setCustomValidity('')"/>
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-primary">Datum ändern</button>
+                </div>
+            </form>
+        </div>
+
+        <br>
+        <div class="row">
+            <form th:action="${'/eventtime/' + id + '/edit/time'}" method="post" class="form-group">
+                <div th:if="${param.timeaccepted}" class="form-group">
+                    <div class="text-success">
+                        <strong>Uhrzeit wurde erfolgreich geändert</strong>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <input name="timenew" type="time" placeholder="Uhrzeit" class="form-control" required
+                           oninvalid="this.setCustomValidity('Bitte eine neue Uhrzeit eingeben')"
+                           oninput="setCustomValidity('')"/>
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-primary">Uhrzeit ändern</button>
+                </div>
+            </form>
+        </div>
+
+        <br>
+        <div class="row">
+            <form th:action="${'/eventtime/' + id + '/edit/duration'}" method="post" class="form-group">
+                <div th:if="${param.durationaccepted}" class="form-group">
+                    <div class="text-success">
+                        <strong>Dauer des Termins wurde erfolgreich geändert</strong>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <input name="durationnew" type="time" placeholder="Dauer des Termins"
+                           class="form-control" required
+                           oninvalid="this.setCustomValidity('Bitte eine neue Dauer des Termins eingeben')"
+                           oninput="setCustomValidity('')"/>
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-primary">Dauer ändern</button>
+                </div>
             </form>
         </div>
     </div>

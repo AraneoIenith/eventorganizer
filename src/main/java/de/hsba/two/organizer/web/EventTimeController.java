@@ -28,7 +28,7 @@ public class EventTimeController {
 
     //Größe der Teilnehmerliste zum Abgleich mit der maximalen Zahl an Teilnehmern
     @ModelAttribute("participantsSize")
-    public Integer getPasrticipantsSize(@PathVariable("id") Long id){
+    public Integer getParticipantsSize(@PathVariable("id") Long id) {
         return eventService.getParticipantsSize(id);
     }
 
@@ -61,7 +61,7 @@ public class EventTimeController {
     public String editEventtimeTitle(@PathVariable("id") Long id, String titlenew, Model model) {
         model.addAttribute("eventtime", eventService.findTime(id));
         eventService.changeEventtimeTitle(id, titlenew);
-        return "redirect:/eventtime/" + id + "/edit/" + "?titleaccepted";
+        return "redirect:/eventtime/" + id + "/?titleaccepted";
     }
 
     //Änderung der Beschreibung eines Termins
@@ -70,7 +70,7 @@ public class EventTimeController {
     public String editEventtimeDescription(@PathVariable("id") Long id, String descriptionnew, Model model) {
         model.addAttribute("eventtime", eventService.findTime(id));
         eventService.changeEventtimeDescription(id, descriptionnew);
-        return "redirect:/eventtime/" + id + "/edit/" + "?descriptionaccepted";
+        return "redirect:/eventtime/" + id + "/?descriptionaccepted";
     }
 
     //Änderung des Datums eines Termins
@@ -79,7 +79,7 @@ public class EventTimeController {
     public String editEventtimeDate(@PathVariable("id") Long id, String datenew, Model model) {
         model.addAttribute("eventtime", eventService.findTime(id));
         eventService.changeEventtimeDate(id, datenew);
-        return "redirect:/eventtime/" + id + "/edit/" + "?dateaccepted";
+        return "redirect:/eventtime/" + id + "/?dateaccepted";
     }
 
     //Änderung der Uhrzeit des Termins
@@ -88,7 +88,7 @@ public class EventTimeController {
     public String editEventtimeTime(@PathVariable("id") Long id, String timenew, Model model) {
         model.addAttribute("eventtime", eventService.findTime(id));
         eventService.changeEventtimeTime(id, timenew);
-        return "redirect:/eventtime/" + id + "/edit/" + "?timeaccepted";
+        return "redirect:/eventtime/" + id + "/?timeaccepted";
     }
 
     //Änderung der Dauer eines Termins
@@ -97,7 +97,7 @@ public class EventTimeController {
     public String editEventtimeDuration(@PathVariable("id") Long id, String durationnew, Model model) {
         model.addAttribute("eventtime", eventService.findTime(id));
         eventService.changeEventtimeDuration(id, durationnew);
-        return "redirect:/eventtime/" + id + "/edit/" + "?durationaccepted";
+        return "redirect:/eventtime/" + id + "/?durationaccepted";
     }
 
     //Anmeldung zu einem Termin
@@ -117,27 +117,9 @@ public class EventTimeController {
     }
 
     @PostMapping(path = "/{id}/delete")
-    public String delete(@PathVariable("id") Long id){
+    public String delete(@PathVariable("id") Long id) {
         Long eventId = eventService.findTime(id).getEvent().getId();
         eventService.deleteTime(id);
         return "redirect:/events/" + eventId;
     }
-
-
-
-//Falls die Seite auch gleichzeitig zum Bearbeiten dienen soll.
-//Damit man gleich zwei ModelAttribute hat (eventtime und formEvent)
-   /* @ModelAttribute("eventtime")
-    public EventTime getEventTime(@PathVariable("id") Long id) {
-        EventTime time = eventService.findTime(id);
-        return time;
-    }*/
-
-    /*@GetMapping
-    public String show(Model model, @PathVariable("id") Long id) {
-        model.addAttribute("formEvent", getEventTime(id));
-        return "events/eventtime";
-    }*/
-
-
 }

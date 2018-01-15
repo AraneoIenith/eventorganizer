@@ -11,9 +11,9 @@
     </div>
 
     <table class="table table-striped">
-            <th>Personalnummer</th>
-            <th>Vorname</th>
-            <th>Rolle</th>
+        <th>Personalnummer</th>
+        <th>Vorname</th>
+        <th>Rolle</th>
         <tr>
             <td th:text="${user.username}">
             </td>
@@ -39,7 +39,8 @@
             </div>
         </div>
         <div class="form-inline">
-            <input name="usernamenew" type="text" placeholder="Neue Personalnummer" class="form-control" required oninvalid="this.setCustomValidity('Bitte eine neue Personalnummer eingeben')"
+            <input name="usernamenew" type="text" placeholder="Neue Personalnummer" class="form-control" required
+                   oninvalid="this.setCustomValidity('Bitte eine neue Personalnummer eingeben')"
                    oninput="setCustomValidity('')"/>
             <button type="submit" class="btn btn-primary">Personalnummer ändern</button>
         </div>
@@ -54,7 +55,8 @@
             </div>
         </div>
         <div class="form-inline">
-            <input name="firstnamenew" type="text" placeholder="Neuer Vorname" class="form-control" required oninvalid="this.setCustomValidity('Bitte einen neuen Vornamen eingeben')"
+            <input name="firstnamenew" type="text" placeholder="Neuer Vorname" class="form-control" required
+                   oninvalid="this.setCustomValidity('Bitte einen neuen Vornamen eingeben')"
                    oninput="setCustomValidity('')"/>
             <button type="submit" class="btn btn-primary">Vorname ändern</button>
         </div>
@@ -78,11 +80,11 @@
                 <strong>Das Passwort wurde erfolgreich geändert</strong>
             </div>
         </div>
-            <div class="form-inline">
-               <input name="passwordnew" type="password" placeholder="Neues Passwort" class="form-control"/>
-               <input name="passwordnew2" type="password" placeholder="Neues Passwort wiederholen" class="form-control"/>
-               <button type="submit" class="btn btn-primary">Passwort ändern</button>
-            </div>
+        <div class="form-inline">
+            <input name="passwordnew" type="password" placeholder="Neues Passwort" class="form-control"/>
+            <input name="passwordnew2" type="password" placeholder="Neues Passwort wiederholen" class="form-control"/>
+            <button type="submit" class="btn btn-primary">Passwort ändern</button>
+        </div>
     </form>
 
     <br>
@@ -94,12 +96,12 @@
             </div>
         </div>
         <div class="form-inline">
-                <select name="rolenew" required>
-                    <option value="" disabled selected hidden>auswählen</option>
-                    <option value="HR">HR</option>
-                    <option value="ORGANIZER">ORGANIZER</option>
-                    <option value="USER">USER</option>
-                </select>
+            <select name="rolenew" required>
+                <option value="" disabled selected hidden>auswählen</option>
+                <option value="HR">HR</option>
+                <option value="ORGANIZER">ORGANIZER</option>
+                <option value="USER">USER</option>
+            </select>
             <button type="submit" class="btn btn-primary">Rolle ändern</button>
         </div>
     </form>

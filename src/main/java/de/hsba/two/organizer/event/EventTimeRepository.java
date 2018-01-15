@@ -15,22 +15,22 @@ interface EventTimeRepository extends JpaRepository<EventTime, Long> {
 
     @Query("update EventTime e set e.title = :titlenew where e.id = :id")
     @Modifying
-    void changeEventtimetitle(@Param ("id") Long id, @Param("titlenew") String titlenew);
+    void changeEventtimetitle(@Param("id") Long id, @Param("titlenew") String titlenew);
 
     @Query("update EventTime e set e.description = :descriptionnew where e.id = :id")
     @Modifying
-    void changeEventtimeDescription(@Param ("id") Long id, @Param("descriptionnew") String descriptionnew);
+    void changeEventtimeDescription(@Param("id") Long id, @Param("descriptionnew") String descriptionnew);
 
     @Query("update EventTime e set e.date = :datenew where e.id = :id")
     @Modifying
-    void changeEventtimeDate(@Param ("id") Long id, @Param("datenew") String datenew);
+    void changeEventtimeDate(@Param("id") Long id, @Param("datenew") String datenew);
 
     @Query("update EventTime e set e.time = :timenew where e.id = :id")
     @Modifying
-    void  changeEventtimeTime(@Param ("id") Long id, @Param("timenew") String timenew);
+    void changeEventtimeTime(@Param("id") Long id, @Param("timenew") String timenew);
 
     @Query("update EventTime e set e.duration = :durationnew where e.id = :id")
     @Modifying
-    void  changeEventtimeDuration(@Param ("id") Long id, @Param("durationnew") String durationnew);
+    void changeEventtimeDuration(@Param("id") Long id, @Param("durationnew") String durationnew);
 
 }

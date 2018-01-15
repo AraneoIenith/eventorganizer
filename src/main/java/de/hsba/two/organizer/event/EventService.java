@@ -27,6 +27,7 @@ public class EventService {
         return repository.findAll();
     }
 
+    //Collection mit Veranstaltungen, die dem angemeldeten User gehören
     public Collection<Event> getEventsByOwner() {
         User currentuser = userService.getUserObj();
         return repository.findByOwner(currentuser);
@@ -39,8 +40,9 @@ public class EventService {
     }
 
     public Event createEvent(Event event) {
-        return repository.save(event); // save one entity
+        return repository.save(event);
     }
+
 
     public Integer getParticipantsSize(Long id) {
         EventTime eventTime = findTime(id);
@@ -50,7 +52,7 @@ public class EventService {
     public void signUp(EventTime eventTime) {
         User currentuserobj = userService.getUserObj();
         List<User> currentParticipants = eventTime.getParticipants();
-        if (!currentParticipants.contains(currentuserobj)){
+        if (!currentParticipants.contains(currentuserobj)) {
             currentParticipants.add(currentuserobj);
         }
     }
@@ -61,13 +63,6 @@ public class EventService {
         currentParticipants.remove(currentuserobj);
     }
 
-    /*@PostConstruct
-    public void init() {
-        Event event = new Event();
-        event.setName("Haspa Selbsverteidigung");
-        event.setCategory("Kampf");
-        createEvent(event, "11111");
-    }*/
 
     public Event getEvent(Long id) {
         return repository.findOne(id);
@@ -82,6 +77,7 @@ public class EventService {
         return timeRepository.findOne(id);
     }
 
+    //Veranstaltung löschen
     public void delete(Long id) {
         repository.delete(id);
     }

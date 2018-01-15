@@ -20,7 +20,9 @@ $(document).ready(function(){
 <body>
 <div layout:fragment="content">
     <div class="page-header">
-        <a class="btn btn-xs btn-link pull-right" href="/events/">Zu den Veranstaltungen</a>
+        <a th:href="${'/profile/' + #httpServletRequest.remoteUser}" class="btn btn-xs btn-link pull-right">Mein
+            Profil</a>
+        <a class="btn btn-xs btn-link pull-right" href="/events/">Startseite</a>
         <h1 th:text="${'Veranstaltung: ' + event.name}"></h1>
         <h4 th:text="${'Kategorie: ' + event.category}"></h4>
         <div id="clickme">
@@ -48,7 +50,6 @@ $(document).ready(function(){
                 <input name="categorynew" type="text" placeholder="Kategorie" class="form-control" required oninvalid="this.setCustomValidity('Bitte eine neue Kategorie eingeben')"
                        oninput="setCustomValidity('')"/>
                 <button type="submit" class="btn btn-primary">Kategorie ändern</button>
-
             </div>
         </form>
             </p>
@@ -69,7 +70,7 @@ $(document).ready(function(){
                 <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
                 <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
             </tr>
-    </table>
+        </table>
     </div>
 
     <table class="table" th:if="${!event.times.empty}">
@@ -89,8 +90,6 @@ $(document).ready(function(){
             <td>
                 <a class="btn btn-info" th:href="${'/eventtime/' + time.id}">Anschauen</a>
             </td>
-            <td th:if="${#httpServletRequest.remoteUser eq event.owner.username}">
-                <a class="btn btn-primary" th:href="${'/eventtime/' + time.id + '/edit'}">Bearbeiten</a></td>
             <td th:if="${#httpServletRequest.remoteUser eq event.owner.username}">
                 <form th:action="${'/eventtime/'+ time.id + '/delete'}" method="post" class="form">
                     <button type="submit" class="btn btn-danger">Löschen</button>
@@ -128,7 +127,8 @@ $(document).ready(function(){
                 <label class="text-danger" th:errors="*{time}"/>
             </div>
             <div class="form-group">Dauer des Termins
-                <input name="duration" type="time" placeholder="Dauer des Termins" class="form-control" th:field="*{duration}"/>
+                <input name="duration" type="time" placeholder="Dauer des Termins" class="form-control"
+                       th:field="*{duration}"/>
                 <label class="text-danger" th:errors="*{duration}"/>
             </div>
             <button type="submit" class="btn btn-primary">Eintragen</button>

@@ -10,7 +10,10 @@
 
 <body>
 <div layout:fragment="content">
-    <h1>Hallo <span th:text="${user.firstname}"></span>!</h1>
+    <div class="page-header">
+        <a class="btn btn-xs btn-link pull-right" href="/events/">Startseite</a>
+        <h1>Hallo <span th:text="${user.firstname}"></span>!</h1>
+    </div>
     <br>
     <div th:if="${!UserEventTimes.empty}">
         <h3>Deine Termine:</h3>
@@ -59,24 +62,26 @@
     <br>
     <form th:action="${'/profile/' + user.username}" method="post" class="form-group">
 
-        <div th:if="${param.passold}" class="form-group">
-            <div class="col-sm-10 text-danger">
-                <strong>Altes Passwort stimmt nicht</strong>
+        <div class="row">
+            <div th:if="${param.passold}" class="form-group">
+                <div class="col-sm-10 text-danger">
+                    <strong>Altes Passwort stimmt nicht</strong>
+                </div>
             </div>
-        </div>
-        <div th:if="${param.passnew}" class="form-group">
-            <div class="col-sm-10 text-danger">
-                <strong>Das neue Passwort wurde nicht korrekt wiederholt</strong>
+            <div th:if="${param.passnew}" class="form-group">
+                <div class="col-sm-10 text-danger">
+                    <strong>Das neue Passwort wurde nicht korrekt wiederholt</strong>
+                </div>
             </div>
-        </div>
-        <div th:if="${param.passempty}" class="form-group">
-            <div class="col-sm-10 text-danger">
-                <strong>Das Passwort darf nicht leer sein</strong>
+            <div th:if="${param.passempty}" class="form-group">
+                <div class="col-sm-10 text-danger">
+                    <strong>Das Passwort darf nicht leer sein</strong>
+                </div>
             </div>
-        </div>
-        <div th:if="${param.succ}" class="form-group">
-            <div class="col-sm-10">
-                <strong>Das Passwort wurde erfolgreich geändert</strong>
+            <div th:if="${param.succ}" class="form-group">
+                <div class="col-sm-10">
+                    <strong>Das Passwort wurde erfolgreich geändert</strong>
+                </div>
             </div>
         </div>
         <div class="form-inline">
@@ -97,9 +102,7 @@
         </ul>
     </div>
     <br>
-    <p class="small">
-        <a href="/events/">Zurück</a>
-    </p>
+
 </div>
 </body>
 </html>

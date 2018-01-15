@@ -3,7 +3,6 @@ package de.hsba.two.organizer.web;
 import de.hsba.two.organizer.event.EventService;
 import de.hsba.two.organizer.user.User;
 import de.hsba.two.organizer.user.UserService;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,32 +30,27 @@ public class ProfileController {
         String currentUserName = userService.getUserName();
         String currentStatus = userService.getStatus(username);
         model.addAttribute("user", currentUserObj);
-        model.addAttribute("events",eventService.getEventsByOwner());
+        model.addAttribute("events", eventService.getEventsByOwner());
         model.addAttribute("UserEventTimes", eventService.getUserEventTimes());
         if (!username.equals(currentUserName) || currentStatus.equals("false")) {
             return "redirect:/accessDenied/";
-        }
-        else {
+        } else {
             return "profile/show";
         }
     }
 
     //Passwort ändern inklusive Prüfung, ob das alte Passwort korrekt ist, das neue nicht leer ist und mit dem wiederholten übereinstimmt
     @PostMapping(path = "/{username}")
-        public String update(@PathVariable("username") String username, String passwordold, String passwordnew, String passwordnew2, Model model)
-    {
+    public String update(@PathVariable("username") String username, String passwordold, String passwordnew, String passwordnew2, Model model) {
         String password = userService.getPassword(username);
         boolean passmatching = userService.EncPass(passwordold, password);
         if (passmatching == false) {
             return "redirect:/profile/" + username + "?passold";
-        }
-        else if (passwordnew == "") {
+        } else if (passwordnew == "") {
             return "redirect:/profile/" + username + "?passempty";
-        }
-        else if (!passwordnew.equals(passwordnew2)) {
+        } else if (!passwordnew.equals(passwordnew2)) {
             return "redirect:/profile/" + username + "?passnew";
-        }
-        else {
+        } else {
             userService.changePassword(username, passwordnew);
             return "redirect:/profile/" + username + "?succ";
         }
